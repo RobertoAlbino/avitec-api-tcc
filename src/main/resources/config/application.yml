@@ -1,0 +1,65 @@
+management:
+    security:
+        roles: ADMIN
+    context-path: /management
+    info:
+        git:
+            mode: full
+    health:
+        mail:
+            enabled: false
+spring:
+    application:
+        name: Controle
+    profiles:
+        active:
+    jackson:
+        serialization.write_dates_as_timestamps: false
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    messages:
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+security:
+    basic:
+        enabled: false
+
+server:
+    port: 8080
+    session:
+        cookie:
+            http-only: true
+
+info:
+    project:
+        version:
+jhipster:
+    async:
+        core-pool-size: 2
+        max-pool-size: 50
+        queue-capacity: 10000
+    mail:
+        from: Controle@localhost
+    swagger:
+        default-include-pattern: /api/.*
+        title: Controle API
+        description: Controle API documentation
+        version: 0.0.1
+        terms-of-service-url:
+        contact-name:
+        contact-url:
+        contact-email:
+        license:
+        license-url:
+    ribbon:
+        display-on-active-profiles: dev
+application:
