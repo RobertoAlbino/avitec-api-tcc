@@ -1,5 +1,5 @@
 git add --all
-git commit -m "Deploy Controle Java Backend Heroku"
+git commit -m "Deploy Cota Easy Heroku"
 git push origin master
 git push heroku master
 gradlew build

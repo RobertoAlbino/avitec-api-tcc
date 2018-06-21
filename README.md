@@ -1,1 +1,1 @@
-## Controle API
+## CotaEasy API
