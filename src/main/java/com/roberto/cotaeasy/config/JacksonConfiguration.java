@@ -1,4 +1,4 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;

@@ -1,4 +1,4 @@
-package com.roberto.controle.domain.base;
+package com.roberto.cotaeasy.domain.base;
 
 public class RetornoBaseModel<T> {
     private boolean sucesso;

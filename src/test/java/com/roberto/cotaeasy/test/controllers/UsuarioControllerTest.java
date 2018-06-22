@@ -1,7 +1,7 @@
-package com.roberto.controle.test.controllers;
+package com.roberto.cotaeasy.test.controllers;
 
-import com.roberto.controle.controllers.UsuarioController;
-import com.roberto.controle.domain.entities.Usuario;
+import com.roberto.cotaeasy.controllers.UsuarioController;
+import com.roberto.cotaeasy.domain.entities.Usuario;
 
 import org.junit.Before;
 import org.junit.Ignore;

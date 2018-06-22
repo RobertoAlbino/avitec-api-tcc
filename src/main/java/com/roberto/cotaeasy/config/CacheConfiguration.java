@@ -1,6 +1,6 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
-import com.roberto.controle.domain.entities.Usuario;
+import com.roberto.cotaeasy.domain.entities.Usuario;
 import io.github.jhipster.config.JHipsterProperties;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;

@@ -6,7 +6,7 @@ logging:
 
 spring:
     profiles:
-        active: prod
+        active: dev
         include: swagger
     devtools:
         restart:
@@ -17,9 +17,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_9b54d3eb431123c?reconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
-        username: b2a394ad0f499e
-        password: 1d9d0d0a
+        url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_d6601de5ae4342f?reconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+        username: bf5a3e148c06ce
+        password: 4522af20
         hikari:
             data-source-properties:
                 cachePrepStmts: true

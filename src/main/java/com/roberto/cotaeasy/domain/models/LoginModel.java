@@ -1,4 +1,4 @@
-package com.roberto.controle.domain.models;
+package com.roberto.cotaeasy.domain.models;
 
 public class LoginModel {
     private String login;

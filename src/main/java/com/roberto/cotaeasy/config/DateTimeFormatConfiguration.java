@@ -1,4 +1,4 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

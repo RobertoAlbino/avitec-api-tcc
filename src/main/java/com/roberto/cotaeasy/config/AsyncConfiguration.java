@@ -1,4 +1,4 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
 import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 import io.github.jhipster.config.JHipsterProperties;

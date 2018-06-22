@@ -1,4 +1,4 @@
-package com.roberto.controle.aop.logging;
+package com.roberto.cotaeasy.aop.logging;
 
 import io.github.jhipster.config.JHipsterConstants;
 

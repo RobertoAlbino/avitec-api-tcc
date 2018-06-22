@@ -43,11 +43,11 @@ def liquibaseCommand(command) {
         main = "liquibase.integration.commandline.Main"
 
         args "--changeLogFile=src/main/controllers/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
-        args "--referenceUrl=hibernate:spring:com.roberto.cotaeasy.domain?dialect=org.hibernate.dialect.PostgreSQLDialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+        args "--referenceUrl=hibernate:spring:com.roberto.cotaeasy.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
         args "--username=root"
         args "--password="
         args "--url=jdbc:mysql://localhost:3306/Controle"
-        args "--driver=org.postgresql.Driver"
+        args "--driver=com.mysql.jdbc.Driver"
         args command
     }
 }

@@ -1,6 +1,6 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
-import com.roberto.controle.aop.logging.LoggingAspect;
+import com.roberto.cotaeasy.aop.logging.LoggingAspect;
 
 import io.github.jhipster.config.JHipsterConstants;
 

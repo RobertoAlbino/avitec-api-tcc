@@ -1,4 +1,4 @@
-package com.roberto.controle.config;
+package com.roberto.cotaeasy.config;
 
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
@@ -28,9 +28,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import javax.servlet.*;
 
-/**
- * Configuration of web application with Servlet 3.0 APIs.
- */
 @Configuration
 public class WebConfigurer implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
@@ -61,9 +58,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         log.info("Web application fully configured");
     }
 
-    /**
-     * Customize the Servlet engine: Mime types, the document root, the cache.
-     */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);

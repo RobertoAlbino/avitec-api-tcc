@@ -1,11 +1,10 @@
-package com.roberto.controle.domain.entities;
+package com.roberto.cotaeasy.domain.entities;
 
-import com.roberto.controle.utils.MD5Utils;
+import com.roberto.cotaeasy.utils.MD5Utils;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

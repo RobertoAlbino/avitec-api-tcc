@@ -1,4 +1,4 @@
-package com.roberto.controle.test;
+package com.roberto.cotaeasy.test;
 
 import org.junit.Ignore;
 

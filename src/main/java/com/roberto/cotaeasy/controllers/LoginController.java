@@ -1,13 +1,14 @@
-package com.roberto.controle.controllers;
+package com.roberto.cotaeasy.controllers;
 
-import com.roberto.controle.domain.base.RetornoBaseModel;
-import com.roberto.controle.domain.entities.Usuario;
-import com.roberto.controle.domain.models.LoginModel;
-import com.roberto.controle.service.UsuarioService;
-import com.roberto.controle.utils.MD5Utils;
+import com.roberto.cotaeasy.domain.base.RetornoBaseModel;
+import com.roberto.cotaeasy.domain.entities.Usuario;
+import com.roberto.cotaeasy.domain.models.LoginModel;
+import com.roberto.cotaeasy.service.UsuarioService;
+import com.roberto.cotaeasy.utils.MD5Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class LoginController {
     private RetornoBaseModel objetoRetorno;
     private UsuarioService usuarioService;
 
+    @Autowired
     public LoginController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }

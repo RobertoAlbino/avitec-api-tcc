@@ -1,8 +1,8 @@
-package com.roberto.controle.test.utils;
+package com.roberto.cotaeasy.test.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
-import com.roberto.controle.utils.MD5Utils;
+import com.roberto.cotaeasy.utils.MD5Utils;
 
 public class MD5UtilsTest {
 
