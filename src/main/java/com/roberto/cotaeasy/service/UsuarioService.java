@@ -34,6 +34,6 @@ public class UsuarioService {
     }
 
     public Usuario findFirstByLogin(LoginModel loginModel) {
-        return usuarioRepository.findFirstByLogin(loginModel.getLogin());
+        return usuarioRepository.findFirstByEmail(loginModel.getEmail());
     }
 }

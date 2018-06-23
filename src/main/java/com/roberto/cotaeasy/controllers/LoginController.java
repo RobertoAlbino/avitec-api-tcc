@@ -25,11 +25,11 @@ public class LoginController {
 
     @PostMapping(value = "/logar", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel logar(@RequestBody LoginModel loginModel) throws Exception {
-        Usuario usuarioEntidade = usuarioService.findFirstByLogin(loginModel);
-        if (usuarioEntidade != null && usuarioEntidade.getSenha().equals(MD5Utils.encriptarSenha(loginModel.getSenha()))) {
-            return new RetornoBaseModel<Usuario>(true, "Usuário válido.", usuarioEntidade);
+        Usuario usuario = usuarioService.findFirstByLogin(loginModel);
+        if (usuario != null && usuario.getSenha().equals(MD5Utils.encriptarSenha(loginModel.getSenha()))) {
+            return new RetornoBaseModel<Usuario>(true, "Usuário válido.", usuario);
         } else {
-            return new RetornoBaseModel<Usuario>(false, "Usuário não cadastrado.", usuarioEntidade);
+            return new RetornoBaseModel<Usuario>(false, "Usuário não encontrado.", null);
         }
     }
 }

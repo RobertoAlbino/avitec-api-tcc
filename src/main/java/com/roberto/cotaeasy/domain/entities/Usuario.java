@@ -1,5 +1,6 @@
 package com.roberto.cotaeasy.domain.entities;
 
+import com.roberto.cotaeasy.domain.enums.EPerfil;
 import com.roberto.cotaeasy.utils.MD5Utils;
 
 import org.hibernate.annotations.Cache;
@@ -10,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity(name = "usuarios")
-@Table(name = "usuarios")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Usuario {
 
@@ -19,19 +19,28 @@ public class Usuario {
     private long id;
 
     @NotNull
-    @Size(min = 1, max = 150)
-    @Column(length = 150, unique = true, nullable = false)
-    private String login;
+    @Size(max = 150)
+    @Column(length = 150)
+    private String nome;
 
     @NotNull
     @Size(min = 10, max = 60)
-    @Column(name = "senha", length = 60, nullable = false)
+    @Column(name = "senha", length = 60)
     private String senha;
 
+    @NotNull
     @Email
-    @Size(min = 5, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
+    @Size(max = 100)
+    @Column(length = 100, unique = true)
     private String email;
+
+    @NotNull
+    @Size(max = 15)
+    private String telefone;
+
+    @Enumerated(EnumType.ORDINAL)
+    @NotNull
+    private EPerfil perfil;
 
     public long getId() {
         return id;
@@ -41,12 +50,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getSenha() {
@@ -65,6 +74,22 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public EPerfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(EPerfil perfil) {
+        this.perfil = perfil;
+    }
+
     @Override
     public boolean equals(Object o) {
         return this == o ? true : false;
@@ -72,7 +97,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Login: " + login +
+        return "Nome: " + nome +
                "Senha: " + senha +
                "E-mail: " + email;
     }

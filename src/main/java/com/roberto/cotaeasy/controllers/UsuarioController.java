@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
     private final Logger log = LoggerFactory.getLogger(UsuarioController.class);
     private final UsuarioService usuarioService;
-    private RetornoBaseModel objetoRetorno;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
@@ -23,8 +22,12 @@ public class UsuarioController {
 
     @PostMapping(value = "/criar", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel criarUsuario(@RequestBody Usuario usuario) throws Exception {
-        Usuario usuarioEntidade = usuarioService.criarUsuario(usuario);
-        return new RetornoBaseModel<Usuario>(true, "Usuário criado com sucesso.", usuarioEntidade);
+        try {
+            Usuario novoUsuario = usuarioService.criarUsuario(usuario);
+            return new RetornoBaseModel<Usuario>(true, "Usuário cadastrado com sucesso.", novoUsuario);
+        } catch (Exception ex) {
+            return new RetornoBaseModel<Usuario>(false, ex.getMessage() , null);
+        }
     }
 
     @PutMapping(value = "/atualizar", consumes = "application/json",  produces="application/json")

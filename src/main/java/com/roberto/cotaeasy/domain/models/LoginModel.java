@@ -1,15 +1,15 @@
 package com.roberto.cotaeasy.domain.models;
 
 public class LoginModel {
-    private String login;
+    private String email;
     private String senha;
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
