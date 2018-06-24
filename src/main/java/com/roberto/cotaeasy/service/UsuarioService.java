@@ -1,6 +1,7 @@
 package com.roberto.cotaeasy.service;
 
 import com.roberto.cotaeasy.domain.entities.Usuario;
+import com.roberto.cotaeasy.domain.enums.EPerfil;
 import com.roberto.cotaeasy.domain.models.LoginModel;
 import com.roberto.cotaeasy.repository.UsuarioRepository;
 
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
 
 @Service
 @Transactional
@@ -35,5 +38,9 @@ public class UsuarioService {
 
     public Usuario findFirstByLogin(LoginModel loginModel) {
         return usuarioRepository.findFirstByEmail(loginModel.getEmail());
+    }
+
+    public LinkedList<Usuario> getAllFornecedores() {
+        return usuarioRepository.findAllByPerfil(EPerfil.FORNECEDOR);
     }
 }

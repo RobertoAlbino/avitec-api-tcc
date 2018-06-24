@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.LinkedList;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -45,7 +46,7 @@ public class UsuarioController {
             throw new Exception("Não é possível excluir uma entidade sem id.");
 
         usuarioService.removerUsuario(usuario.getId());
-        return new RetornoBaseModel<Object>(true, "Usuário removido com sucesso.", new Object());
+        return new RetornoBaseModel(true, "Usuário removido com sucesso.", null);
     }
 
     @GetMapping(value = "/consultar", consumes = "application/json",  produces="application/json")
@@ -54,6 +55,16 @@ public class UsuarioController {
             throw new Exception("Não é possível consultar sem um id.");
 
         Usuario usuarioEntidade = usuarioService.consultarUsuario(usuario.getId());
-        return new RetornoBaseModel<Usuario>(true, "Usuário criado com sucesso.", usuarioEntidade);
+        return new RetornoBaseModel<Usuario>(true, "Usuário encontrado.", usuarioEntidade);
+    }
+
+    @PostMapping(value = "/getAllFornecedores", consumes = "application/json",  produces="application/json")
+    public RetornoBaseModel getAllFornecedores() throws Exception {
+        try {
+            LinkedList<Usuario> listaFornecedores = usuarioService.getAllFornecedores();
+            return new RetornoBaseModel<LinkedList<Usuario>>(true, "Lista de fornecedores.", listaFornecedores);
+        } catch (Exception ex) {
+            return new RetornoBaseModel<LinkedList<Usuario>>(false, ex.getMessage(), null);
+        }
     }
 }

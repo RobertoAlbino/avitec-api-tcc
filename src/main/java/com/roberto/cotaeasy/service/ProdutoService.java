@@ -24,6 +24,14 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
+    public Produto cadastrarProduto(Produto produto) {
+        return produtoRepository.save(produto);
+    }
+
+    public void deleteById(long idProduto) {
+        produtoRepository.delete(idProduto);
+    }
+
     public LinkedList<Produto> getAllByUsuarioId(Usuario usuario) throws Exception {
         if (usuario.getPerfil() != EPerfil.USUARIO)
             throw new Exception("Usuário não habilitado para consultar lista de produtos.");

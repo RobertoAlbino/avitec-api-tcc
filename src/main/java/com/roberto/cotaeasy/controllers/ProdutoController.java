@@ -26,6 +26,26 @@ public class ProdutoController {
         this.usuarioService = usuarioService;
     }
 
+    @PostMapping(value = "/cadastrarProduto", consumes = "application/json",  produces="application/json")
+    public RetornoBaseModel cadastrarProduto(@RequestBody Produto produto) throws Exception {
+        try {
+            produtoService.cadastrarProduto(produto);
+            return new RetornoBaseModel<Produto>(true, "Produto cadastrado com sucesso.", produto);
+        } catch (Exception ex) {
+            return new RetornoBaseModel<Produto>(false, ex.getMessage(), null);
+        }
+    }
+
+    @PostMapping(value = "/deleteById", consumes = "application/json",  produces="application/json")
+    public RetornoBaseModel deleteById(@RequestBody long idProduto) throws Exception {
+        try {
+            produtoService.deleteById(idProduto);
+            return new RetornoBaseModel<LinkedList<Produto>>(true, "Produto removido com sucesso.", null);
+        } catch (Exception ex) {
+            return new RetornoBaseModel<LinkedList<Produto>>(false, ex.getMessage(), null);
+        }
+    }
+
     @PostMapping(value = "/getAllByUsuarioId", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel getAllByUsuarioId(@RequestBody long idUsuario) throws Exception {
         try {

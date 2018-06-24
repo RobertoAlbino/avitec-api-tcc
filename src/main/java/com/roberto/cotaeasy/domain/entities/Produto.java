@@ -1,7 +1,7 @@
 package com.roberto.cotaeasy.domain.entities;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +17,10 @@ public class Produto {
     @Size(max = 150)
     @Column(length = 150)
     private String nome;
+
+    @NotNull
+    @Value("${some.key:false}")
+    private boolean cotado;
 
     @NotNull
     @OneToOne
@@ -37,6 +41,22 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isCotado() {
+        return cotado;
+    }
+
+    public void setCotado(boolean cotado) {
+        this.cotado = cotado;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
