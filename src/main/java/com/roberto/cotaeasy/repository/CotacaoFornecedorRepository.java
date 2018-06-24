@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CotacaoFornecedorRepository extends JpaRepository<CotacaoFornecedor, Long> {
+    void deleteByCotacaoProdutoId(long produtoId);
 }

@@ -3,6 +3,8 @@ package com.roberto.cotaeasy.service;
 import com.roberto.cotaeasy.domain.entities.Produto;
 import com.roberto.cotaeasy.domain.entities.Usuario;
 import com.roberto.cotaeasy.domain.enums.EPerfil;
+import com.roberto.cotaeasy.repository.CotacaoFornecedorRepository;
+import com.roberto.cotaeasy.repository.CotacaoRepository;
 import com.roberto.cotaeasy.repository.ProdutoRepository;
 
 import org.slf4j.Logger;
@@ -18,18 +20,30 @@ import java.util.LinkedList;
 public class ProdutoService {
     private final Logger log = LoggerFactory.getLogger(ProdutoService.class);
     private ProdutoRepository produtoRepository;
+    private CotacaoRepository cotacaoRepository;
+    private CotacaoFornecedorRepository cotacaoFornecedorRepository;
 
     @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository,
+                          CotacaoRepository cotacaoRepository,
+                          CotacaoFornecedorRepository cotacaoFornecedorRepository) {
         this.produtoRepository = produtoRepository;
+        this.cotacaoRepository = cotacaoRepository;
+        this.cotacaoFornecedorRepository = cotacaoFornecedorRepository;
     }
 
     public Produto cadastrarProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
-    public void deleteById(long idProduto) {
-        produtoRepository.delete(idProduto);
+    public void deleteById(long idProduto) throws Exception {
+        try {
+            cotacaoFornecedorRepository.deleteByCotacaoProdutoId(idProduto);
+            cotacaoRepository.deleteByProdutoId(idProduto);
+            produtoRepository.delete(idProduto);
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
     }
 
     public LinkedList<Produto> getAllByUsuarioId(Usuario usuario) throws Exception {

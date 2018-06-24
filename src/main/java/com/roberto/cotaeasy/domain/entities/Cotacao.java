@@ -1,10 +1,9 @@
 package com.roberto.cotaeasy.domain.entities;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity(name = "cotacoes")
@@ -15,9 +14,11 @@ public class Cotacao {
     private long id;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private Date dataInicio;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private Date dataFinal;
 
     @NotNull
