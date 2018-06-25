@@ -4,6 +4,7 @@ import com.roberto.cotaeasy.domain.entities.Produto;
 import com.roberto.cotaeasy.domain.entities.Usuario;
 import com.roberto.cotaeasy.domain.enums.EPerfil;
 import com.roberto.cotaeasy.repository.CotacaoFornecedorRepository;
+import com.roberto.cotaeasy.repository.CotacaoLanceRepository;
 import com.roberto.cotaeasy.repository.CotacaoRepository;
 import com.roberto.cotaeasy.repository.ProdutoRepository;
 
@@ -22,14 +23,17 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     private CotacaoRepository cotacaoRepository;
     private CotacaoFornecedorRepository cotacaoFornecedorRepository;
+    private CotacaoLanceRepository cotacaoLanceRepository;
 
     @Autowired
     public ProdutoService(ProdutoRepository produtoRepository,
                           CotacaoRepository cotacaoRepository,
-                          CotacaoFornecedorRepository cotacaoFornecedorRepository) {
+                          CotacaoFornecedorRepository cotacaoFornecedorRepository,
+                          CotacaoLanceRepository cotacaoLanceRepository) {
         this.produtoRepository = produtoRepository;
         this.cotacaoRepository = cotacaoRepository;
         this.cotacaoFornecedorRepository = cotacaoFornecedorRepository;
+        this.cotacaoLanceRepository = cotacaoLanceRepository;
     }
 
     public Produto cadastrarProduto(Produto produto) {
@@ -38,6 +42,7 @@ public class ProdutoService {
 
     public void deleteById(long idProduto) throws Exception {
         try {
+            cotacaoLanceRepository.deleteByCotacaoProdutoId(idProduto);
             cotacaoFornecedorRepository.deleteByCotacaoProdutoId(idProduto);
             cotacaoRepository.deleteByProdutoId(idProduto);
             produtoRepository.delete(idProduto);

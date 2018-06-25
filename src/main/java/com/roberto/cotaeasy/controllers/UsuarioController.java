@@ -58,6 +58,12 @@ public class UsuarioController {
         return new RetornoBaseModel<Usuario>(true, "Usuário encontrado.", usuarioEntidade);
     }
 
+    @GetMapping(value = "/consultarById", consumes = "application/json",  produces="application/json")
+    public RetornoBaseModel consultarById(@RequestBody long idUsuario) throws Exception {
+        Usuario usuarioEntidade = usuarioService.consultarUsuario(idUsuario);
+        return new RetornoBaseModel<Usuario>(true, "Usuário encontrado.", usuarioEntidade);
+    }
+
     @PostMapping(value = "/getAllFornecedores", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel getAllFornecedores() throws Exception {
         try {
