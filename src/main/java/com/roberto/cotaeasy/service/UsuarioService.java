@@ -25,7 +25,14 @@ public class UsuarioService {
     }
 
     public Usuario criarUsuario(Usuario usuario) throws Exception {
+        if (usuarioExistente(usuario.getEmail()))
+            throw new Exception("E-mail já está em uso.");
+
         return usuarioRepository.save(usuario);
+    }
+
+    public boolean usuarioExistente(String email) {
+        return usuarioRepository.findFirstByEmail(email) != null ? true : false;
     }
 
     public void removerUsuario(long id) {
