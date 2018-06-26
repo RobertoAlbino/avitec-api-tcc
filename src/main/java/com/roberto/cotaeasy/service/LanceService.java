@@ -3,6 +3,7 @@ package com.roberto.cotaeasy.service;
 import com.roberto.cotaeasy.domain.entities.Cotacao;
 import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.entities.Usuario;
+import com.roberto.cotaeasy.domain.models.BuscarLancesModel;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.domain.models.NovoLanceModel;
 import com.roberto.cotaeasy.repository.CotacaoLanceRepository;
@@ -14,6 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.LinkedList;
+
+import static org.springframework.core.OrderComparator.sort;
 
 @Service
 @Transactional
@@ -48,6 +54,15 @@ public class LanceService {
             cotacaoLanceRepository.save(cotacaoLance);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
+        }
+    }
+
+    public LinkedList<CotacaoLance> getTodosLanceProduto(BuscarLancesModel buscarLancesModel) throws Exception {
+        try {
+            return  cotacaoLanceRepository.getAllByCotacaoUsuarioIdAndCotacaoProdutoId(buscarLancesModel.getIdUsuario(),
+                                                                                       buscarLancesModel.getIdProduto());
+        } catch (Exception ex) {
+            throw  new Exception(ex.getMessage());
         }
     }
 }

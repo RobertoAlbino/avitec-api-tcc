@@ -2,6 +2,7 @@ package com.roberto.cotaeasy.controllers;
 
 import com.roberto.cotaeasy.domain.base.RetornoBaseModel;
 import com.roberto.cotaeasy.domain.entities.Cotacao;
+import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.service.CotacaoService;
 
@@ -47,8 +48,18 @@ public class CotacaoController {
     @PostMapping(value = "/getCotacoesUsuario", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel getCotacoesUsuario(@RequestBody long idUsuario) throws Exception {
         try {
-            LinkedList<Cotacao> cotacoes = cotacaoService.getCotacoesDisponiveisUsuario(idUsuario);
-            return new RetornoBaseModel<LinkedList<Cotacao>>(true, "Cotações do usuário.", cotacoes);
+            LinkedList<Cotacao> cotacoesWithLances = new LinkedList<>();
+            LinkedList<CotacaoLance> cotacoes = cotacaoService.getCotacoesDisponiveisUsuario(idUsuario);
+            for (CotacaoLance cotacaoLance : cotacoes) {
+                boolean produtoExistente = false;
+                for (Cotacao cotacao : cotacoesWithLances) {
+                    if (cotacao.getId() == cotacaoLance.getCotacao().getId())
+                        produtoExistente = true;
+                }
+                if (!produtoExistente)
+                    cotacoesWithLances.push(cotacaoLance.getCotacao());
+            }
+            return new RetornoBaseModel<LinkedList<Cotacao>>(true, "Cotações do usuário.", cotacoesWithLances);
         } catch (Exception ex) {
             return new RetornoBaseModel<LinkedList<Cotacao>>(false, ex.getMessage(), null);
         }

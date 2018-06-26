@@ -2,10 +2,12 @@ package com.roberto.cotaeasy.service;
 
 import com.roberto.cotaeasy.domain.entities.Cotacao;
 import com.roberto.cotaeasy.domain.entities.CotacaoFornecedor;
+import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.entities.Usuario;
 import com.roberto.cotaeasy.domain.enums.EPerfil;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.repository.CotacaoFornecedorRepository;
+import com.roberto.cotaeasy.repository.CotacaoLanceRepository;
 import com.roberto.cotaeasy.repository.CotacaoRepository;
 
 import com.roberto.cotaeasy.repository.UsuarioRepository;
@@ -27,14 +29,17 @@ public class CotacaoService {
     private UsuarioRepository usuarioRepository;
     private CotacaoRepository cotacaoRepository;
     private CotacaoFornecedorRepository cotacaoFornecedorRepository;
+    private CotacaoLanceRepository cotacaoLanceRepository;
 
     @Autowired
     public CotacaoService(UsuarioRepository usuarioRepository,
                           CotacaoRepository cotacaoRepository,
-                          CotacaoFornecedorRepository cotacaoFornecedorRepository) {
+                          CotacaoFornecedorRepository cotacaoFornecedorRepository,
+                          CotacaoLanceRepository cotacaoLanceRepository) {
         this.usuarioRepository = usuarioRepository;
         this.cotacaoRepository = cotacaoRepository;
         this.cotacaoFornecedorRepository = cotacaoFornecedorRepository;
+        this.cotacaoLanceRepository = cotacaoLanceRepository;
     }
 
     public NovaCotacaoModel novaCotacao(NovaCotacaoModel novaCotacaoModel) throws Exception {
@@ -76,9 +81,9 @@ public class CotacaoService {
         }
     }
 
-    public LinkedList<Cotacao> getCotacoesDisponiveisUsuario(long idUsuario) throws Exception {
+    public LinkedList<CotacaoLance> getCotacoesDisponiveisUsuario(long idUsuario) throws Exception {
         try {
-            return cotacaoRepository.getAllByUsuarioId(idUsuario);
+            return cotacaoLanceRepository.getAllByCotacaoUsuarioId(idUsuario);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
