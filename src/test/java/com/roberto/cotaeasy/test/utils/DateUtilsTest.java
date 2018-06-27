@@ -12,9 +12,8 @@ import java.util.Date;
 public class DateUtilsTest {
 
     @Test
-    public void garantirDataNaoPossuiHora() {
-        Date dataFormatada = DateUtils.removerHorasData(DateTime.now().toDate());
-        System.out.println(dataFormatada.toString());
-        Assert.assertTrue(DateFormat.getDateInstance().format(DateTime.now().toDate()) == "26/06/2018");
+    public void garantirQueRemoveHoraDaData() {
+        Date data = DateUtils.removerHorasData(DateTime.now().toDate());
+        Assert.assertTrue( new DateTime(data).getHourOfDay() == 0);
     }
 }

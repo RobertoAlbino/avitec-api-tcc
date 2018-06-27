@@ -64,7 +64,7 @@ public class CotacaoService {
         try {
             LinkedList<Cotacao> listaCotacoes = new LinkedList<>();
             LinkedList<CotacaoFornecedor> cotacoesFornecedor = cotacaoFornecedorRepository.getAllByFornecedorId(idFornecedor);
-            if (cotacoesFornecedor == null)
+            if (cotacoesFornecedor.size() == 0)
                 throw new Exception("Nenhuma cotação foi encontrada.");
 
             for (CotacaoFornecedor cotacaoFornecedor : cotacoesFornecedor) {

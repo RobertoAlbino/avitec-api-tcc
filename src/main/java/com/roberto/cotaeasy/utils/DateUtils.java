@@ -7,6 +7,6 @@ import java.util.Date;
 public class DateUtils {
 
     public static Date removerHorasData(Date data) {
-        return DateTime.parse(DateFormat.getDateInstance().format(data)).withTime(0,0,0,0).toDate();
+        return new DateTime(data).withTime(0,0,0,0).toDate();
     }
 }
