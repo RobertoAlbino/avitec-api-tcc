@@ -29,6 +29,7 @@ public class LanceController {
     public RetornoBaseModel novoLance(@RequestBody NovoLanceModel novoLanceModel) throws Exception {
         try {
             lanceService.novoLance(novoLanceModel);
+            lanceService.EnviarEmailAvisandoCompradorNovoLance(novoLanceModel);
             return new RetornoBaseModel<Boolean>(true, "Lance criado com sucesso.", true);
         } catch (Exception ex) {
             return new RetornoBaseModel<Boolean>(false, ex.getMessage(), null);

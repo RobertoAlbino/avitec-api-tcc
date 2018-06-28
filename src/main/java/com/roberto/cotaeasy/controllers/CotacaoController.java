@@ -5,15 +5,13 @@ import com.roberto.cotaeasy.domain.entities.Cotacao;
 import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.service.CotacaoService;
-
 import com.roberto.cotaeasy.utils.DateUtils;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.LinkedList;
 
 @RestController
@@ -31,9 +29,10 @@ public class CotacaoController {
     @PostMapping(value = "/novaCotacao", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel novaCotacao(@RequestBody NovaCotacaoModel novaCotacaoModel) throws Exception {
         try {
-            novaCotacaoModel.getCotacao().setDataInicio(DateUtils.removerHorasData(novaCotacaoModel.getCotacao().getDataInicio()));
-            novaCotacaoModel.getCotacao().setDataFinal(DateUtils.removerHorasData(novaCotacaoModel.getCotacao().getDataFinal()));
+            novaCotacaoModel.getCotacao().setDataInicio(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataInicio()).plusDays(1).toDate()));
+            novaCotacaoModel.getCotacao().setDataFinal(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataFinal()).plusDays(1).toDate()));
             cotacaoService.novaCotacao(novaCotacaoModel);
+            cotacaoService.EnviarEmailAvisandoFornecedoresNovaCotacao(novaCotacaoModel);
             return new RetornoBaseModel<NovaCotacaoModel>(true, "Cotação iniciada.", novaCotacaoModel);
         } catch (Exception ex) {
             return new RetornoBaseModel<NovaCotacaoModel>(false, ex.getMessage(), null);

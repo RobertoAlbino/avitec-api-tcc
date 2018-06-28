@@ -3,6 +3,7 @@ package com.roberto.cotaeasy.service;
 import com.roberto.cotaeasy.domain.entities.Cotacao;
 import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.entities.Usuario;
+import com.roberto.cotaeasy.domain.enums.ETipoEmail;
 import com.roberto.cotaeasy.domain.models.BuscarLancesModel;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.domain.models.NovoLanceModel;
@@ -25,14 +26,17 @@ import static org.springframework.core.OrderComparator.sort;
 @Transactional
 public class LanceService {
     private final Logger log = LoggerFactory.getLogger(LanceService.class);
+    LogEmailService logEmailService;
     private UsuarioRepository usuarioRepository;
     private CotacaoRepository cotacaoRepository;
     private CotacaoLanceRepository cotacaoLanceRepository;
 
     @Autowired
-    public LanceService(UsuarioRepository usuarioRepository,
+    public LanceService(LogEmailService logEmailService,
+                        UsuarioRepository usuarioRepository,
                         CotacaoRepository cotacaoRepository,
                         CotacaoLanceRepository cotacaoLanceRepository) {
+        this.logEmailService = logEmailService;
         this.usuarioRepository = usuarioRepository;
         this.cotacaoRepository = cotacaoRepository;
         this.cotacaoLanceRepository = cotacaoLanceRepository;
@@ -64,5 +68,21 @@ public class LanceService {
         } catch (Exception ex) {
             throw  new Exception(ex.getMessage());
         }
+    }
+
+    public void EnviarEmailAvisandoCompradorNovoLance(NovoLanceModel novoLanceModel) {
+        Usuario fornecedor = usuarioRepository.findOne(novoLanceModel.getIdFornecedor());
+        if (fornecedor == null)
+            return;
+
+        String assunto = "Novo lance recebido - " + novoLanceModel.getCotacao().getProduto().getNome();
+        String corpoEmail =   "O produto: " + novoLanceModel.getCotacao().getProduto().getNome() +
+                         ", acabou de receber um lance no valor de R$: " + novoLanceModel.getLance() +
+                         ", o lance foi realizado pelo fornecedor: " + fornecedor.getNome() +
+                         ", email do fornecedor: " + fornecedor.getEmail();
+
+        Runnable emailRunnable = new EmailService(novoLanceModel.getCotacao().getUsuario().getEmail(), assunto, corpoEmail , ETipoEmail.NOVO_LANCE_RECEBIDO);
+        new Thread(emailRunnable).start();
+        logEmailService.gravarLogEnvioEmail(assunto, corpoEmail,novoLanceModel.getCotacao().getUsuario().getEmail() , ETipoEmail.NOVO_LANCE_RECEBIDO);
     }
 }

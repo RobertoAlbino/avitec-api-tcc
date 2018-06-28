@@ -5,6 +5,7 @@ import com.roberto.cotaeasy.domain.entities.CotacaoFornecedor;
 import com.roberto.cotaeasy.domain.entities.CotacaoLance;
 import com.roberto.cotaeasy.domain.entities.Usuario;
 import com.roberto.cotaeasy.domain.enums.EPerfil;
+import com.roberto.cotaeasy.domain.enums.ETipoEmail;
 import com.roberto.cotaeasy.domain.models.NovaCotacaoModel;
 import com.roberto.cotaeasy.repository.CotacaoFornecedorRepository;
 import com.roberto.cotaeasy.repository.CotacaoLanceRepository;
@@ -17,25 +18,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.util.calendar.BaseCalendar;
 
-import java.util.Date;
+import java.text.DateFormat;
 import java.util.LinkedList;
 
 @Service
 @Transactional
 public class CotacaoService {
     private final Logger log = LoggerFactory.getLogger(CotacaoService.class);
+    private LogEmailService logEmailService;
     private UsuarioRepository usuarioRepository;
     private CotacaoRepository cotacaoRepository;
     private CotacaoFornecedorRepository cotacaoFornecedorRepository;
     private CotacaoLanceRepository cotacaoLanceRepository;
 
     @Autowired
-    public CotacaoService(UsuarioRepository usuarioRepository,
+    public CotacaoService(LogEmailService logEmailService,
+                          UsuarioRepository usuarioRepository,
                           CotacaoRepository cotacaoRepository,
                           CotacaoFornecedorRepository cotacaoFornecedorRepository,
                           CotacaoLanceRepository cotacaoLanceRepository) {
+        this.logEmailService = logEmailService;
         this.usuarioRepository = usuarioRepository;
         this.cotacaoRepository = cotacaoRepository;
         this.cotacaoFornecedorRepository = cotacaoFornecedorRepository;
@@ -87,5 +90,26 @@ public class CotacaoService {
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
+    }
+
+    public void EnviarEmailAvisandoFornecedoresNovaCotacao(NovaCotacaoModel novaCotacaoModel) {
+        String fornecedoresDestinatatios = "";
+        for (CotacaoFornecedor cotacaoFornecedor : novaCotacaoModel.getFornecedores()) {
+            Usuario fornecedor = usuarioRepository.findOne(cotacaoFornecedor.getFornecedor().getId());
+            if (fornecedor == null)
+                continue;
+
+            fornecedoresDestinatatios+= fornecedor.getEmail() + ",";
+        }
+
+        String assunto = "Nova cotação iniciada";
+        String corpoEmail = "Uma nova cotação foi iniciada para o produto: " +
+                novaCotacaoModel.getCotacao().getProduto().getNome() + ", com data de ínicio: "
+                + DateFormat.getDateInstance().format(novaCotacaoModel.getCotacao().getDataInicio()) + " e data de término: "
+                + DateFormat.getDateInstance().format(novaCotacaoModel.getCotacao().getDataFinal()) +
+                ", Comprador: " + novaCotacaoModel.getCotacao().getUsuario().getNome();
+        Runnable emailRunnable = new EmailService(fornecedoresDestinatatios, assunto, corpoEmail , ETipoEmail.NOVA_COTACAO_INICIADA);
+        new Thread(emailRunnable).start();
+        logEmailService.gravarLogEnvioEmail(assunto, corpoEmail, fornecedoresDestinatatios, ETipoEmail.NOVA_COTACAO_INICIADA);
     }
 }
