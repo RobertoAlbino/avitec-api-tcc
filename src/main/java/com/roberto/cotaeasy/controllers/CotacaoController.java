@@ -29,8 +29,8 @@ public class CotacaoController {
     @PostMapping(value = "/novaCotacao", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel novaCotacao(@RequestBody NovaCotacaoModel novaCotacaoModel) throws Exception {
         try {
-            novaCotacaoModel.getCotacao().setDataInicio(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataInicio()).plusDays(1).toDate()));
-            novaCotacaoModel.getCotacao().setDataFinal(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataFinal()).plusDays(1).toDate()));
+            novaCotacaoModel.getCotacao().setDataInicio(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataInicio()).toDate()));
+            novaCotacaoModel.getCotacao().setDataFinal(DateUtils.removerHorasData(new DateTime(novaCotacaoModel.getCotacao().getDataFinal()).toDate()));
             cotacaoService.novaCotacao(novaCotacaoModel);
             cotacaoService.EnviarEmailAvisandoFornecedoresNovaCotacao(novaCotacaoModel);
             return new RetornoBaseModel<NovaCotacaoModel>(true, "Cotação iniciada.", novaCotacaoModel);
