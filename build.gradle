@@ -24,9 +24,9 @@ plugins {
 }
 
 apply plugin: 'java'
-sourceCompatibility=10
-targetCompatibility=10
-assert System.properties['java.specification.version'] == '10'
+sourceCompatibility=1.8
+targetCompatibility=1.8
+assert System.properties['java.specification.version'] == '1.8'
 
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
@@ -59,7 +59,7 @@ war {
 }
 
 springBoot {
-    mainClass = 'com.roberto.avitec.AvitecApp'
+    mainClass = 'com.roberto.avitec.AviTecApp'
     executable = true
     buildInfo()
 }

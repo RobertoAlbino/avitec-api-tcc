@@ -1,7 +1,6 @@
 package com.roberto.avitec.service;
 
 import com.roberto.avitec.domain.entities.Usuario;
-import com.roberto.avitec.domain.enums.EPerfil;
 import com.roberto.avitec.domain.models.LoginModel;
 import com.roberto.avitec.repository.UsuarioRepository;
 
@@ -45,9 +44,5 @@ public class UsuarioService {
 
     public Usuario findFirstByLogin(LoginModel loginModel) {
         return usuarioRepository.findFirstByEmail(loginModel.getEmail());
-    }
-
-    public LinkedList<Usuario> getAllFornecedores() {
-        return usuarioRepository.findAllByPerfil(EPerfil.FORNECEDOR);
     }
 }

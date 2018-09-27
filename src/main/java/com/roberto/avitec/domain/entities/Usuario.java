@@ -1,6 +1,4 @@
 package com.roberto.avitec.domain.entities;
-
-import com.roberto.avitec.domain.enums.EPerfil;
 import com.roberto.avitec.utils.MD5Utils;
 
 import org.hibernate.annotations.Cache;
@@ -36,10 +34,6 @@ public class Usuario {
     @NotNull
     @Size(max = 15)
     private String telefone;
-
-    @Enumerated(EnumType.ORDINAL)
-    @NotNull
-    private EPerfil perfil;
 
     public long getId() {
         return id;
@@ -80,15 +74,6 @@ public class Usuario {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-    public EPerfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(EPerfil perfil) {
-        this.perfil = perfil;
-    }
-
     @Override
     public boolean equals(Object o) {
         return this == o ? true : false;
