@@ -17,9 +17,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_d6601de5ae4342f?reconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
-        username: bf5a3e148c06ce
-        password: 4522af20
+        url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_0d70eb6d65298dc?reconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+        username: bb1cb3a982be66
+        password: 7df1eb45
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -51,7 +51,8 @@ spring:
 liquibase:
     contexts: dev
 server:
-    port: ${PORT}
+    #port: ${PORT}
+    port: 8080
 jhipster:
     http:
         version: V_1_1

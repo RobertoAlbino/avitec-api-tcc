@@ -1,12 +1,12 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.roberto.controle"
+      "packageName": "com.roberto.avitec"
     },
     "jhipsterVersion": "4.14.1",
-    "baseName": "Controle",
-    "packageName": "com.roberto.controle",
-    "packageFolder": "com/roberto/controle",
+    "baseName": "Avitec",
+    "packageName": "com.roberto.avitec",
+    "packageFolder": "com/roberto/avitec",
     "serverPort": "8080",
     "authenticationType": "session",
     "cacheProvider": "ehcache",

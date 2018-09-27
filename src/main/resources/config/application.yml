@@ -10,7 +10,7 @@ management:
             enabled: false
 spring:
     application:
-        name: CotaEasy
+        name: Avitec
     profiles:
         active:
     jackson:
@@ -48,11 +48,11 @@ jhipster:
         max-pool-size: 50
         queue-capacity: 10000
     mail:
-        from: CotaEasy@localhost
+        from: AviTec@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: CotaEasy API
-        description: CotaEasy API documentation
+        title: AviTec API
+        description: AviTec API documentation
         version: 0.0.1
         terms-of-service-url:
         contact-name:

@@ -24,9 +24,9 @@ plugins {
 }
 
 apply plugin: 'java'
-sourceCompatibility=1.8
-targetCompatibility=1.8
-assert System.properties['java.specification.version'] == '1.8'
+sourceCompatibility=10
+targetCompatibility=10
+assert System.properties['java.specification.version'] == '10'
 
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
@@ -45,13 +45,13 @@ dependencyManagement {
 
 defaultTasks 'bootRun'
 
-group = 'com.roberto.cotaeasy'
+group = 'com.roberto.avitec'
 version = '0.0.1-SNAPSHOT'
 
 description = ''
 
 bootRepackage {
-   mainClass = 'com.roberto.cotaeasy.CotaEasyApp'
+   mainClass = 'com.roberto.avitec.AvitecApp'
 }
 
 war {
@@ -59,7 +59,7 @@ war {
 }
 
 springBoot {
-    mainClass = 'com.roberto.cotaeasy.CotaEasyApp'
+    mainClass = 'com.roberto.avitec.AvitecApp'
     executable = true
     buildInfo()
 }
