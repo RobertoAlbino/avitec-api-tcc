@@ -1,1 +1,1 @@
-web: cd build && ls && gradle build && java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/avitec-pathing-0.0.1-SNAPSHOT.jar
