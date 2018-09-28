@@ -1,1 +1,1 @@
-web: ls && java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar
+web: ls && gradle build && java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar
