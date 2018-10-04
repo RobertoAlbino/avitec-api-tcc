@@ -51,8 +51,8 @@ spring:
 liquibase:
     contexts: dev
 server:
-    port: ${PORT}
-    #port: 8080
+    #port: ${PORT}
+    port: 8080
 jhipster:
     http:
         version: V_1_1
@@ -71,7 +71,7 @@ jhipster:
         remember-me:
             key: 61dbdb866b7bb9d48cb395f29d9decc15b138919
     mail:
-        from: Controle@localhost
+        from: Avitec@localhost
         base-url: http://127.0.0.1:8080
     metrics:
         jmx.enabled: true
@@ -79,7 +79,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: Controle
+            prefix: Avitec
         prometheus:
             enabled: false
             endpoint: /prometheusMetrics
