@@ -1,19 +1,17 @@
 package com.roberto.avitec.domain.entities;
+
 import com.roberto.avitec.utils.MD5Utils;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity(name = "usuarios")
+@Entity(name = "usuario")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull
     @Size(max = 150)
@@ -21,19 +19,18 @@ public class Usuario {
     private String nome;
 
     @NotNull
+    @Size(max = 150)
+    @Column(length = 150)
+    private String usuario;
+
+    @NotNull
     @Size(min = 10, max = 60)
     @Column(name = "senha", length = 60)
     private String senha;
 
     @NotNull
-    @Email
-    @Size(max = 100)
-    @Column(length = 100, unique = true)
-    private String email;
-
-    @NotNull
-    @Size(max = 15)
-    private String telefone;
+    @Column(name = "admin")
+    private Boolean admin;
 
     public long getId() {
         return id;
@@ -51,6 +48,15 @@ public class Usuario {
         this.nome = nome;
     }
 
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
     public String getSenha() {
         return senha;
     }
@@ -59,30 +65,11 @@ public class Usuario {
         this.senha = MD5Utils.encriptarSenha(senha);
     }
 
-    public String getEmail() {
-        return email;
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-    @Override
-    public boolean equals(Object o) {
-        return this == o ? true : false;
-    }
-
-    @Override
-    public String toString() {
-        return "Nome: " + nome +
-               "Senha: " + senha +
-               "E-mail: " + email;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 }
