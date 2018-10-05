@@ -2,11 +2,10 @@ package com.roberto.avitec.domain.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity(name = "acao")
-public class Acao {
+@Entity(name = "historico_humidade")
+public class HistoricoHumidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +15,12 @@ public class Acao {
     private Date data;
 
     @NotNull
-    @Size(max = 150)
-    @Column(length = 150)
-    private String descricao;
+    private Double valor;
+
+    @NotNull
+    @OneToOne
+    @JoinColumn(name = "id_alojamento")
+    private Alojamento alojamento;
 
     public Long getId() {
         return id;
@@ -36,11 +38,19 @@ public class Acao {
         this.data = data;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Alojamento getAlojamento() {
+        return alojamento;
+    }
+
+    public void setAlojamento(Alojamento alojamento) {
+        this.alojamento = alojamento;
     }
 }
