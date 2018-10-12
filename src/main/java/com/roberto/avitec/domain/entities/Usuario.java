@@ -15,17 +15,16 @@ public class Usuario {
 
     @NotNull
     @Size(max = 150)
-    @Column(length = 150)
+    @Column(name = "nome")
     private String nome;
 
     @NotNull
     @Size(max = 150)
-    @Column(length = 150)
+    @Column(name = "usuario")
     private String usuario;
 
     @NotNull
-    @Size(min = 10, max = 60)
-    @Column(name = "senha", length = 60)
+    @Column(name = "senha")
     private String senha;
 
     @NotNull
@@ -61,7 +60,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) throws Exception {
-        this.senha = MD5Utils.encriptarSenha(senha);
+        this.senha = senha;
     }
 
     public Boolean getAdmin() {

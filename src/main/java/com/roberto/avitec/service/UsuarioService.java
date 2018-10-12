@@ -1,5 +1,6 @@
 package com.roberto.avitec.service;
 
+import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Usuario;
 import com.roberto.avitec.domain.models.LoginModel;
 import com.roberto.avitec.repository.UsuarioRepository;
@@ -21,6 +22,14 @@ public class UsuarioService {
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
+    }
+
+    public Boolean logar(Usuario usuario) {
+        return usuarioRepository.existsByUsuarioAndSenha(usuario.getUsuario(), usuario.getSenha());
+    }
+
+    public Usuario criarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
     public void removerUsuario(long id) {

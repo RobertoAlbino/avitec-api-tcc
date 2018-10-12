@@ -32,7 +32,6 @@ public class AviTecApp {
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(com.roberto.avitec.AviTecApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
-        System.out.println("cheguei aqui");
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
                 "Aplicacao '{}' esta rodando! Acesso:\n\t" +
