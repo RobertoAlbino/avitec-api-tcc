@@ -22,7 +22,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping(value = "/logar", consumes = "application/json",  produces="application/json")
+    @PostMapping(value = "/logar", consumes = "application/json",  produces="application/json")
     public RetornoBaseModel logar(@RequestBody Usuario usuario) throws Exception {
         if (usuarioService.logar(usuario)) {
             return new RetornoBaseModel<Usuario>(true, "Sucesso", usuario);
