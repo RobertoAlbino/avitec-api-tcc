@@ -1,15 +1,16 @@
 package com.roberto.avitec.domain.models;
 
 public class LoginModel {
-    private String email;
+
+    private String usuario;
     private String senha;
 
-    public String getEmail() {
-        return email;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {

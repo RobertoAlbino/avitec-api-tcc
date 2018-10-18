@@ -1,7 +1,5 @@
 package com.roberto.avitec.domain.entities;
 
-import com.roberto.avitec.utils.MD5Utils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

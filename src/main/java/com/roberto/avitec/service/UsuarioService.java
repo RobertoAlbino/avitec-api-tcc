@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -38,5 +39,17 @@ public class UsuarioService {
 
     public Usuario consultarUsuario(long id) {
         return usuarioRepository.findOne(id);
+    }
+
+    public Usuario loginToUsuario(LoginModel loginModel) throws Exception {
+        if (Objects.isNull(loginModel) ||
+            Objects.isNull(loginModel.getUsuario()) ||
+            Objects.isNull(loginModel.getSenha())) {
+            throw new Exception("Nem todas as informações de login foram informadas.");
+        }
+        Usuario usuario = new Usuario();
+        usuario.setUsuario(loginModel.getUsuario());
+        usuario.setSenha(loginModel.getSenha());
+        return usuario;
     }
 }

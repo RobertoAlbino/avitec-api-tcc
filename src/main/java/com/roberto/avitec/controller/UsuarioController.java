@@ -2,13 +2,13 @@ package com.roberto.avitec.controller;
 
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Usuario;
+import com.roberto.avitec.domain.models.LoginModel;
 import com.roberto.avitec.service.UsuarioService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.LinkedList;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -23,11 +23,12 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "/logar", consumes = "application/json",  produces="application/json")
-    public RetornoBaseModel logar(@RequestBody Usuario usuario) throws Exception {
-        if (usuarioService.logar(usuario)) {
-            return new RetornoBaseModel<Usuario>(true, "Sucesso", usuario);
+    public RetornoBaseModel logar(@RequestBody LoginModel usuario) throws Exception {
+        Usuario user = usuarioService.loginToUsuario(usuario);
+        if (usuarioService.logar(user)) {
+            return new RetornoBaseModel<LoginModel>(true, "Sucesso", usuario);
         } else {
-            return new RetornoBaseModel<Usuario>(false, "Falha", usuario);
+            return new RetornoBaseModel<LoginModel>(false, "Falha", usuario);
         }
     }
 
