@@ -25,8 +25,14 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Boolean logar(Usuario usuario) {
-        return usuarioRepository.existsByUsuarioAndSenha(usuario.getUsuario(), usuario.getSenha());
+    public RetornoBaseModel logar(LoginModel login) throws Exception {
+        Usuario user = loginToUsuario(login);
+        Usuario userEntity = usuarioRepository.findByUsuarioAndSenha(user.getUsuario(), user.getSenha());
+        if (Objects.nonNull(userEntity)) {
+            return new RetornoBaseModel<Usuario>(true, "Sucesso", userEntity);
+        } else {
+            return new RetornoBaseModel<Usuario>(false, "Falha", userEntity);
+        }
     }
 
     public Usuario criarUsuario(Usuario usuario) {

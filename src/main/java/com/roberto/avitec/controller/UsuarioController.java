@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -23,13 +25,8 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "/logar", consumes = "application/json",  produces="application/json")
-    public RetornoBaseModel logar(@RequestBody LoginModel usuario) throws Exception {
-        Usuario user = usuarioService.loginToUsuario(usuario);
-        if (usuarioService.logar(user)) {
-            return new RetornoBaseModel<LoginModel>(true, "Sucesso", usuario);
-        } else {
-            return new RetornoBaseModel<LoginModel>(false, "Falha", usuario);
-        }
+    public RetornoBaseModel logar(@RequestBody LoginModel login) throws Exception {
+        return usuarioService.logar(login);
     }
 
     @GetMapping(value = "/consultar", consumes = "application/json",  produces="application/json")
