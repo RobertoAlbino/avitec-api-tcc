@@ -1,41 +1,14 @@
-package com.roberto.avitec.domain.entities;
+package com.roberto.avitec.domain.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+public class UsuarioModel {
 
-@Entity(name = "usuario")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
-    @NotNull
-    @Size(max = 150)
-    @Column(name = "nome")
     private String nome;
 
-    @NotNull
-    @Size(max = 150)
-    @Column(name = "usuario")
     private String usuario;
 
-    @NotNull
-    @Column(name = "senha")
     private String senha;
 
-    @NotNull
-    @Column(name = "admin")
     private Boolean admin;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
