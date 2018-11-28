@@ -17,6 +17,7 @@ import java.util.Objects;
 @Service
 @Transactional
 public class UsuarioService {
+
     private final Logger log = LoggerFactory.getLogger(UsuarioService.class);
     private UsuarioRepository usuarioRepository;
 
@@ -70,7 +71,7 @@ public class UsuarioService {
     }
 
     public Usuario criarUsuario(UsuarioModel model) throws Exception {
-        Usuario usuario = ModelToEntity(model);
+        Usuario usuario = modelToEntity(model);
         isUsuarioDuplicado(usuario);
         validate(usuario);
         return usuarioRepository.save(usuario);
@@ -92,7 +93,7 @@ public class UsuarioService {
         return usuario;
     }
 
-    public Usuario ModelToEntity(UsuarioModel model) throws  Exception{
+    public Usuario modelToEntity(UsuarioModel model) throws  Exception{
         Usuario usuario = new Usuario();
         usuario.setId(0);
         usuario.setNome(model.getNome());

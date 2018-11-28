@@ -1,8 +1,8 @@
 package com.roberto.avitec.domain.enums;
 
 public enum ETipoEmail {
-    NOVA_COTACAO_INICIADA(0),
-    NOVO_LANCE_RECEBIDO(1);
+
+    ANOMALIA(0);
 
     private int tipo;
 

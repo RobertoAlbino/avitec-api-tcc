@@ -1,0 +1,260 @@
+infer(1)                     Infer Static Analyzer                    infer(1)
+
+
+
+NNAAMMEE
+       infer - static analysis for Java and C/C++/Objective-C/Objective-C++
+
+SSYYNNOOPPSSIISS
+       iinnffeerr aannaallyyzzee _[_o_p_t_i_o_n_s_]
+       iinnffeerr ccaappttuurree _[_o_p_t_i_o_n_s_]
+       iinnffeerr ccoommppiillee _[_o_p_t_i_o_n_s_]
+       iinnffeerr rreeppoorrtt _[_o_p_t_i_o_n_s_]
+       iinnffeerr rreeppoorrttddiiffff _[_o_p_t_i_o_n_s_]
+       iinnffeerr rruunn _[_o_p_t_i_o_n_s_]
+       iinnffeerr ----ccoommppiillaattiioonn--ddaattaabbaassee[[--eessccaappeedd]] _f_i_l_e _[_o_p_t_i_o_n_s_]
+       iinnffeerr _[_o_p_t_i_o_n_s_] ---- ccoommppiillee ccoommmmaanndd
+       iinnffeerr _[_o_p_t_i_o_n_s_]
+
+DDEESSCCRRIIPPTTIIOONN
+       Infer is a static analyzer. Given a collection of source files written
+       in Java or in languages of the C family, and a command to build them,
+       infer produces a list of potential issues.
+
+       Infer consists of a collection of tools referenced in the _S_E_E _A_L_S_O
+       section of this manual. See their respective manuals for more
+       information.
+
+       When run without a subcommand, and if a compilation command is
+       specified via the ---- option or one of the
+       ----ccllaanngg--ccoommppiillaattiioonn--ddaattaabbaassee[[--eessccaappeedd]] options, then iinnffeerr behaves as
+       iinnffeerr--rruunn(1). Otherwise, iinnffeerr behaves as iinnffeerr--aannaallyyzzee(1).
+
+OOPPTTIIOONNSS
+       Every infer command accepts the arguments from all the other infer
+       commands.
+
+       Options are read from the ..iinnffeerrccoonnffiigg file, then from the IINNFFEERR__AARRGGSS
+       environment variable, then from the command line. Options in IINNFFEERR__AARRGGSS
+       take precedence over options in ..iinnffeerrccoonnffiigg, and options passed on the
+       command line take precedence over options in IINNFFEERR__AARRGGSS. See the
+       _E_N_V_I_R_O_N_M_E_N_T and _F_I_L_E_S sections of this manual for more information.
+
+       Options can be specified inside an argument file _f_i_l_e by passing @@_f_i_l_e
+       as argument. The format is one option per line, and enclosing single '
+       and double " quotes are ignored.
+
+       Options without a default value (e.g., ----lliinntteerr) and options with
+       list-like values (e.g., ----XXbbuucckk) all have a corresponding
+       ----ooppttiioonn--rreesseett flag that resets their values to nothing or the empty
+       list, respectively. For instance, ----XXbbuucckk--rreesseett will cancel any
+       previous ----XXbbuucckk option passed to infer.
+
+       See the manuals of individual infer commands for details about their
+       supported options. The following is a list of all the supported options
+       (see also ----hheellpp--ffuullll for options reserved for internal use).
+
+       ----aannaallyyzzeerr,--aa _{ _c_h_e_c_k_e_r_s _| _i_n_f_e_r _| _c_a_p_t_u_r_e _| _c_o_m_p_i_l_e _| _c_r_a_s_h_c_o_n_t_e_x_t _|
+       _l_i_n_t_e_r_s _}
+           Specify which analyzer to run (only one at a time is supported):
+           - bbiiaabbdduuccttiioonn: run the bi-abduction based checker only, in
+           particular to check for memory errors
+           - cchheecckkeerrss: run the default checkers, including the bi-abduction
+           based checker for memory errors (default)
+           - iinnffeerr: alias for bbiiaabbdduuccttiioonn
+           - lliinntteerrss: run linters based on the ast only (clang only,
+           activated by default)
+
+           - ccaappttuurree: similar to specifying the ccaappttuurree subcommand
+           (DEPRECATED)
+           - ccoommppiillee: similar to specifying the ccoommppiillee subcommand
+           (DEPRECATED)
+           - ccrraasshhccoonntteexxtt: experimental (see ----ccrraasshhccoonntteexxtt)
+           See also iinnffeerr--aannaallyyzzee(1) and iinnffeerr--rruunn(1).
+
+       ----<<aannaallyyzzeerr>>--bbllaacckklliisstt--ffiilleess--ccoonnttaaiinniinngg _+_s_t_r_i_n_g
+           blacklist files containing the specified string for the given
+           analyzer (see ----aannaallyyzzeerr for valid values)
+           See also iinnffeerr--rreeppoorrtt(1) and iinnffeerr--rruunn(1).
+
+       ----<<aannaallyyzzeerr>>--bbllaacckklliisstt--ppaatthh--rreeggeexx _+_p_a_t_h___r_e_g_e_x
+           blacklist the analysis of files whose relative path matches the
+           specified OCaml-style regex (to whitelist:
+           ----<<aannaallyyzzeerr>>--wwhhiitteelliisstt--ppaatthh--rreeggeexx)
+           See also iinnffeerr--rreeppoorrtt(1) and iinnffeerr--rruunn(1).
+
+       ----<<aannaallyyzzeerr>>--ssuupppprreessss--eerrrroorrss _+_e_r_r_o_r___n_a_m_e
+           do not report a type of errors
+           See also iinnffeerr--rreeppoorrtt(1) and iinnffeerr--rruunn(1).
+
+       ----nnoo--aannnnoottaattiioonn--rreeaacchhaabbiilliittyy
+           Deactivates: the annotation reachability checker. Given a pair of
+           source and sink annotation, e.g. @PerformanceCritical and
+           @Expensive, this checker will warn whenever some method annotated
+           with @PerformanceCritical calls, directly or indirectly, another
+           method annotated with @Expensive (Conversely:
+           ----aannnnoottaattiioonn--rreeaacchhaabbiilliittyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----aannnnoottaattiioonn--rreeaacchhaabbiilliittyy--ccuussttoomm--ppaaiirrss _j_s_o_n
+           Specify custom sources/sink for the annotation reachability checker
+           Example format: for custom annotations
+           com.my.annotation.{Source1,Source2,Sink1}
+           { "sources" : ["Source1", "Source2"], "sink" : "Sink1" }
+           (default: _[_])
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----aannnnoottaattiioonn--rreeaacchhaabbiilliittyy--oonnllyy
+           Activates: Enable ----aannnnoottaattiioonn--rreeaacchhaabbiilliittyy and disable all other
+           checkers (Conversely: ----nnoo--aannnnoottaattiioonn--rreeaacchhaabbiilliittyy--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----aappppeenndd--bbuucckk--ffllaavvoorrss _+_s_t_r_i_n_g
+           Additional Buck flavors to append to targets discovered by the
+           ----bbuucckk--ccoommppiillaattiioonn--ddaattaabbaassee option.
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----nnoo--bbiiaabbdduuccttiioonn
+           Deactivates: the separation logic based bi-abduction analysis using
+           the checkers framework (Conversely: ----bbiiaabbdduuccttiioonn)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----bbiiaabbdduuccttiioonn--oonnllyy
+           Activates: Enable ----bbiiaabbdduuccttiioonn and disable all other checkers
+           (Conversely: ----nnoo--bbiiaabbdduuccttiioonn--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----bboo--ddeebbuugg _i_n_t
+           Debug level for buffer-overrun checker (0-4) (default: _0)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----bboooottccllaassssppaatthh _s_t_r_i_n_g
+           Specify the Java bootclasspath
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----bbuucckk--bbllaacckklliisstt _r_e_g_e_x
+           Skip analysis of files matched by the specified regular expression
+           See also iinnffeerr--ccaappttuurree(1) and iinnffeerr--rruunn(1).
+
+       ----bbuucckk--ccoommppiillaattiioonn--ddaattaabbaassee _{ _n_o_-_d_e_p_s _| _d_e_p_s _}
+           Buck integration using the compilation database, with or without
+           dependencies.
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----bbuucckk--ccoommppiillaattiioonn--ddaattaabbaassee--ddeepptthh _i_n_t
+           Depth of dependencies used by the ----bbuucckk--ccoommppiillaattiioonn--ddaattaabbaassee ddeeppss
+           option. By default, all recursive dependencies are captured.
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----bbuucckk--oouutt _d_i_r
+           Specify the root directory of buck-out
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----bbuuffffeerroovveerrrruunn
+           Activates: the buffer overrun analysis (Conversely:
+           ----nnoo--bbuuffffeerroovveerrrruunn)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----bbuuffffeerroovveerrrruunn--oonnllyy
+           Activates: Enable ----bbuuffffeerroovveerrrruunn and disable all other checkers
+           (Conversely: ----nnoo--bbuuffffeerroovveerrrruunn--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----cchhaannggeedd--ffiilleess--iinnddeexx _f_i_l_e
+           Specify the file containing the list of source files from which
+           reactive analysis should start. Source files should be specified
+           relative to project root or be absolute
+           See also iinnffeerr--aannaallyyzzee(1) and iinnffeerr--ddiiffff(1).
+
+       ----cchheecckk--nnuullllaabbllee
+           Activates: checks that values annotated with nullable are always
+           checked for null before dereference (Conversely:
+           ----nnoo--cchheecckk--nnuullllaabbllee)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----cchheecckk--nnuullllaabbllee--oonnllyy
+           Activates: Enable ----cchheecckk--nnuullllaabbllee and disable all other checkers
+           (Conversely: ----nnoo--cchheecckk--nnuullllaabbllee--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccllaanngg--bbiinniioouu--ffiillee _f_i_l_e
+           Specify a file containing the AST of the program, in biniou format
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----ccoommppiillaattiioonn--ddaattaabbaassee _+_p_a_t_h
+           File that contain compilation commands (can be specified multiple
+           times)
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----ccoommppiillaattiioonn--ddaattaabbaassee--eessccaappeedd _+_p_a_t_h
+           File that contain compilation commands where all entries are
+           escaped for the shell, eg coming from Xcode (can be specified
+           multiple times)
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----ccoommppuuttee--aannaallyyttiiccss
+           Activates: Emit analytics as info-level issues, like component kit
+           line count and component kit file cyclomatic complexity
+           (Conversely: ----nnoo--ccoommppuuttee--aannaallyyttiiccss)
+           See also iinnffeerr--ccaappttuurree(1) and iinnffeerr--rruunn(1).
+
+       ----ccoonnttiinnuuee
+           Activates: Continue the capture for the reactive analysis,
+           increasing the changed files/procedures. (If a procedure was
+           changed beforehand, keep the changed marking.) (Conversely:
+           ----nnoo--ccoonnttiinnuuee)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccoosstt
+           Activates: checker for performance cost analysis (Conversely:
+           ----nnoo--ccoosstt)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccoosstt--oonnllyy
+           Activates: Enable ----ccoosstt and disable all other checkers
+           (Conversely: ----nnoo--ccoosstt--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccrraasshhccoonntteexxtt
+           Activates: the crashcontext checker for Java stack trace context
+           reconstruction (Conversely: ----nnoo--ccrraasshhccoonntteexxtt)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccrraasshhccoonntteexxtt--oonnllyy
+           Activates: Enable ----ccrraasshhccoonntteexxtt and disable all other checkers
+           (Conversely: ----nnoo--ccrraasshhccoonntteexxtt--oonnllyy)
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ccuurrrreenntt--ttoo--pprreevviioouuss--ssccrriipptt _s_h_e_l_l
+           Specify a script to checkout a previous version of the project to
+           compare against, assuming we are on the current version already.
+           See also iinnffeerr--ddiiffff(1).
+
+       ----nnoo--ccxxxx
+           Deactivates: Analyze C++ methods (Conversely: ----ccxxxx)
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----ccxxxx--iinnffeerr--hheeaaddeerrss
+           Activates: Include C++ header models during compilation. Infer
+           swaps some C++ headers for its own in order to get a better model
+           of, eg, the standard library. This can sometimes cause compilation
+           failures. (Conversely: ----nnoo--ccxxxx--iinnffeerr--hheeaaddeerrss)
+           See also iinnffeerr--ccaappttuurree(1).
+
+       ----ccxxxx--ssccooppee--gguuaarrddss _j_s_o_n
+           Specify scope guard classes that can be read only by destructors
+           without being reported as dead stores. (default: _[_])
+           See also iinnffeerr--aannaallyyzzee(1).
+
+       ----ddeebbuugg,--gg
+           Activates: Debug mode (also sets ----ddeebbuugg--lleevveell 22, ----ddeevveellooppeerr--mmooddee,
+           ----nnoo--ffiilltteerriinngg, ----pprriinntt--bbuucckkeettss, ----pprriinntt--ttyyppeess,
+           ----rreeppoorrttss--iinncclluuddee--mmll--lloocc, ----nnoo--oonnllyy--cchheeaapp--ddeebbuugg, ----ttrraaccee--eerrrroorr,
+           ----wwrriittee--ddoottttyy, ----wwrriittee--hhttmmll) (Conversely: ----nnoo--ddeebbuugg | --GG)
+           See also iinnffeerr--aannaallyyzzee(1), iinnffeerr--ccaappttuurree(1), iinnffeerr--ccoommppiillee(1),
+           iinnffeerr--ddiiffff(1), iinnffeerr--eevveennttss(1), iinnffeerr--rreeppoorrtt(1),
+           iinnffeerr--rreeppoorrttddiiffff(1), and iinnffeerr--rruunn(1).
+
+       ----ddeebbuugg--lleevveell _l_e_v_e_l
+           Debug level (sets ----bboo--ddeebbuugg _l_e_v_e_l, ----ddeebbuugg--lleevveell--aannaallyyssiiss _l_e_v_e_l,
+           ----d

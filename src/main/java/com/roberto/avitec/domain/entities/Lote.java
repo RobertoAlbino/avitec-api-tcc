@@ -14,7 +14,6 @@ public class Lote {
     @NotNull
     private Date dataInicio;
 
-    @NotNull
     private Date dataTermino;
 
     @NotNull

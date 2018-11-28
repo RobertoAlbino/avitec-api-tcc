@@ -1,0 +1,13 @@
+Found 1 issue
+
+src/main/java/com/roberto/avitec/controller/AlojamentoController.java:26: error: NULL_DEREFERENCE
+  object `s` last assigned on line 25 could be null and is dereferenced at line 26.
+  24.       public AlojamentoController(AlojamentoService alojamentoService) {
+  25.           String s = null;
+  26. >         s.length();
+  27.           this.alojamentoService = alojamentoService;
+  28.       }
+
+Summary of the reports
+
+  NULL_DEREFERENCE: 1

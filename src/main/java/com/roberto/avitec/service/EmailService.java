@@ -1,13 +1,10 @@
 package com.roberto.avitec.service;
 
-import com.roberto.avitec.domain.entities.LogEmail;
 import com.roberto.avitec.domain.enums.ETipoEmail;
-import com.roberto.avitec.repository.LogEmailRepository;
 
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -18,21 +15,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EmailService implements Runnable {
+
     private final Logger log = LoggerFactory.getLogger(EmailService.class);
     private Properties parametrosServidorEmail = new Properties();
-    private String destinatarios;
     private String assunto;
     private String corpo;
     private ETipoEmail tipo;
 
-    public EmailService(String destinatarios, String assunto, String corpo, ETipoEmail tipo) {
-        this.destinatarios = destinatarios;
+    public EmailService(String assunto, String corpo, ETipoEmail tipo) {
         this.assunto = assunto;
         this.corpo = corpo;
         this.tipo = tipo;
     }
 
-    public Properties configurarParametrosServidorEmail() {
+    private Properties configurarParametrosServidorEmail() {
         parametrosServidorEmail.put("mail.smtp.host", "smtp.gmail.com");
         parametrosServidorEmail.put("mail.smtp.socketFactory.port", "465");
         parametrosServidorEmail.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -47,12 +43,12 @@ public class EmailService implements Runnable {
             new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication()
                 {
-                    return new PasswordAuthentication("avitec@gmail.com", "avitec123456789");
+                    return new PasswordAuthentication("controle.equipamentos123@gmail.com", "geovana123456789");
                 }
             });
             Message email = new MimeMessage(session);
-            email.setFrom(new InternetAddress("avitec@gmail.com"));
-            Address[] toDestinatarios = InternetAddress.parse(destinatarios);
+            email.setFrom(new InternetAddress("controle.equipamentos123@gmail.com"));
+            Address[] toDestinatarios = {new InternetAddress("controle.equipamentos123@gmail.com")};
             email.setRecipients(Message.RecipientType.TO, toDestinatarios);
             email.setSubject(assunto);
             email.setText(corpo);

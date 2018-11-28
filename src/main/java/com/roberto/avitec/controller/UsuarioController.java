@@ -11,14 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     private final Logger log = LoggerFactory.getLogger(UsuarioController.class);
-    private final UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
