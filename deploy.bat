@@ -3,7 +3,7 @@ git commit -m "Deploying avitec"
 git push avi master
 git push heroku master
 gradle build
-heroku deploy:jar --jar build/libs/avitec-0.0.1-SNAPSHOT.war --app avitec-api
+heroku deploy --jar build/libs/avitec-0.0.1-SNAPSHOT.war --app avitec-api
 
 
 
