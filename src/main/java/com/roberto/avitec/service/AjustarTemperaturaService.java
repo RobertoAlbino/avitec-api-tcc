@@ -12,7 +12,7 @@ public class AjustarTemperaturaService {
 
     public static Integer temperatura = null;
 
-    private static void notificarUsuario(Integer temperatura) throws Exception {
+    public void notificarUsuario(Integer temperatura) throws Exception {
         GregorianCalendar calendar = new GregorianCalendar();
         Integer diaHoje = calendar.get(GregorianCalendar.DAY_OF_MONTH);
         Boolean deveEnviarNotificacao = false;

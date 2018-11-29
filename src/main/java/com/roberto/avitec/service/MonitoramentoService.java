@@ -25,7 +25,14 @@ public class MonitoramentoService {
         return new Random().nextInt(101);
     }
 
-    public Integer getTemperatura() {
-        return ajustarTemperaturaService.getTemperatura() != null ? ajustarTemperaturaService.getTemperatura() + 1 : new Random().nextInt(66);
+    public Integer getTemperatura() throws Exception {
+        if (ajustarTemperaturaService.getTemperatura() != null) {
+            ajustarTemperaturaService.notificarUsuario(ajustarTemperaturaService.getTemperatura());
+            return ajustarTemperaturaService.getTemperatura();
+        } else {
+            Integer temperaturaAtual = new Random().nextInt(66) + 1;
+            ajustarTemperaturaService.notificarUsuario(temperaturaAtual);
+            return temperaturaAtual;
+        }
     }
 }
