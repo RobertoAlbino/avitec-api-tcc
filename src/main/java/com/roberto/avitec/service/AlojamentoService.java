@@ -30,6 +30,10 @@ public class AlojamentoService {
         return alojamento;
     }
 
+    public Alojamento find(Long idAlojamento) {
+        return alojamentoRepository.findOne(idAlojamento);
+    }
+
     public List<Alojamento> findAll()  {
         return alojamentoRepository.findAll();
     }

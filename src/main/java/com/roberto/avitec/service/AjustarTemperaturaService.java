@@ -1,5 +1,6 @@
 package com.roberto.avitec.service;
 
+import com.roberto.avitec.domain.entities.Alojamento;
 import com.roberto.avitec.domain.enums.ETipoEmail;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +11,18 @@ import java.util.GregorianCalendar;
 @Transactional
 public class AjustarTemperaturaService {
 
+    private AlojamentoService alojamentoService;
+    private LoteService loteService;
+
     public static Integer temperatura = null;
 
-    public void notificarUsuario(Integer temperatura) throws Exception {
-        GregorianCalendar calendar = new GregorianCalendar();
-        Integer diaHoje = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+    public AjustarTemperaturaService(AlojamentoService alojamentoService, LoteService loteService) {
+        this.alojamentoService = alojamentoService;
+        this.loteService = loteService;
+    }
+
+    public void notificarUsuario(Long alojamento, Integer temperatura) throws Exception {
+        Long diaHoje = loteService.hasAtivo(alojamento).getIdadeLote();
         Boolean deveEnviarNotificacao = false;
         if (diaHoje <= 4 && (temperatura < 30 || temperatura > 33)) {
             deveEnviarNotificacao = true;
@@ -62,7 +70,7 @@ public class AjustarTemperaturaService {
     }
 
     public Integer setTemperatura(Long alojamento, Integer temperatura) throws Exception {
-        notificarUsuario(temperatura);
+        notificarUsuario(alojamento, temperatura);
         this.temperatura = temperatura;
         return  temperatura;
     }

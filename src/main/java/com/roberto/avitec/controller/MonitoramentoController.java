@@ -39,10 +39,10 @@ public class MonitoramentoController {
         }
     }
 
-    @GetMapping(value = "/temperatura",produces="application/json")
-    public RetornoBaseModel getTemperatura() throws Exception {
+    @GetMapping(value = "/temperatura/{alojamento}",produces="application/json")
+    public RetornoBaseModel getTemperatura(@PathVariable Long alojamento) throws Exception {
         try {
-            return new RetornoBaseModel<Integer>(true, "Temperatura do ambiente", monitoramentoService.getTemperatura());
+            return new RetornoBaseModel<Integer>(true, "Temperatura do ambiente", monitoramentoService.getTemperatura(alojamento));
         } catch (Exception ex) {
             return new RetornoBaseModel<Integer>(false, ex.getMessage() , null);
         }
