@@ -53,7 +53,7 @@ public class AjustarTemperaturaService {
         }
 
         if (deveEnviarNotificacao) {
-            new EmailService("Anomalia na temperatura", "Existe uma anomalia na temperatura do aviário, temperatura atual se encontra em: "+ temperatura.toString() +"°C", ETipoEmail.ANOMALIA).enviarEmail();
+            new EmailService("Anomalia na temperatura", "Existe uma anomalia na temperatura do aviário, a temperatura atual se encontra em: "+ temperatura.toString() +"°C", ETipoEmail.ANOMALIA).enviarEmail();
         }
     }
 
