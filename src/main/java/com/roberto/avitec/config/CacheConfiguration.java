@@ -1,6 +1,6 @@
 package com.roberto.avitec.config;
 
-import com.roberto.avitec.domain.entities.Usuario;
+import com.roberto.avitec.domain.entities.Indicador;
 import io.github.jhipster.config.JHipsterProperties;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
@@ -38,7 +38,7 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            cm.createCache(Usuario.class.getName(), jcacheConfiguration);
+            cm.createCache(Indicador.class.getName(), jcacheConfiguration);
         };
     }
 }
