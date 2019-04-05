@@ -3,10 +3,10 @@ package com.roberto.avitec.service;
 import com.roberto.avitec.domain.entities.Indicador;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import com.roberto.avitec.repository.IndicadorRepository;
+import com.roberto.avitec.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -25,6 +25,7 @@ public class IndicadorService {
         indicador.setZona(model.getZona());
         indicador.setTemperatura(model.getTemperatura());
         indicador.setUmidade(model.getUmidade());
+        indicador.setData(DateUtils.now());
         return indicador;
     }
 

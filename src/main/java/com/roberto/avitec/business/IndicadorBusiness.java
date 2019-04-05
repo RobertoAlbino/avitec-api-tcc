@@ -18,6 +18,13 @@ public class IndicadorBusiness {
         this.indicadorService = indicadorService;
     }
 
+    public RetornoBaseModel findAll() {
+        try {
+            return new RetornoBaseModel(true, "Lista de indicadores", indicadorService.findAll());
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
     public RetornoBaseModel create(IndicadorModel model) {
         try {
             return new RetornoBaseModel(true, "Indicador criado com sucesso", indicadorService.create(model));

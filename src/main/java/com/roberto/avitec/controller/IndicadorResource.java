@@ -4,20 +4,22 @@ import com.roberto.avitec.business.IndicadorBusiness;
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/indicadores")
-public class IndicadorController {
+public class IndicadorResource {
 
     private IndicadorBusiness indicadorBusiness;
 
     @Autowired
-    public IndicadorController(IndicadorBusiness indicadorBusiness) {
+    public IndicadorResource(IndicadorBusiness indicadorBusiness) {
         this.indicadorBusiness = indicadorBusiness;
+    }
+
+    @GetMapping(produces="application/json")
+    public RetornoBaseModel findAll() {
+        return indicadorBusiness.findAll();
     }
 
     @PostMapping(consumes = "application/json", produces="application/json")

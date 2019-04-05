@@ -3,6 +3,7 @@ package com.roberto.avitec.domain.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity(name = "indicador")
 public class Indicador {
@@ -19,6 +20,9 @@ public class Indicador {
 
     @NotNull
     private BigDecimal umidade;
+
+    @NotNull
+    private Date data;
 
     public Long getId() {
         return id;
@@ -50,5 +54,13 @@ public class Indicador {
 
     public void setUmidade(BigDecimal umidade) {
         this.umidade = umidade;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
