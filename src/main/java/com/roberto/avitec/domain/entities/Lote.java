@@ -50,6 +50,6 @@ public class Lote {
     }
 
     public void setAtivo(Boolean ativo) {
-        ativo = ativo;
+        this.ativo = ativo;
     }
 }

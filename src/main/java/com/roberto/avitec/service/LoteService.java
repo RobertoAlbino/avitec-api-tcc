@@ -41,8 +41,11 @@ public class LoteService {
         return loteRepository.save(lote);
     }
 
-    public Boolean hasLoteAtivo() {
-        return false;
-        //return loteRepository.existsByAtivoTrue() != null ? true : false;
+    public Lote getLoteAtivo() {
+        return loteRepository.getFirstByAtivo(true);
+    }
+
+    public boolean hasLoteAtivo() {
+        return loteRepository.existsLoteByAtivoTrue();
     }
 }

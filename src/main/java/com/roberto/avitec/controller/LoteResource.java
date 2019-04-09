@@ -26,8 +26,8 @@ public class LoteResource {
         return loteBusiness.iniciar();
     }
 
-    @PutMapping(value = "/finalizar/{id}", consumes = "application/json", produces="application/json")
-    public RetornoBaseModel finalizar(@PathVariable("id") Long id) {
-        return loteBusiness.finalizar(id);
+    @PutMapping(value = "/finalizar", consumes = "application/json", produces="application/json")
+    public RetornoBaseModel finalizar() {
+        return loteBusiness.finalizar();
     }
 }

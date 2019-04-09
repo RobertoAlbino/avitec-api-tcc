@@ -26,7 +26,7 @@ public class LoteBusiness {
 
     private void validateFinalizacaoLote(Lote lote) {
         if (lote == null) {
-            throw new RuntimeException("Lote não encontrado");
+            throw new RuntimeException("Nenhum lote ativo foi encontrado");
         }
         if (!lote.getAtivo()) {
             throw new RuntimeException("Esse lote ainda não foi iniciado");
@@ -50,9 +50,9 @@ public class LoteBusiness {
         }
     }
 
-    public RetornoBaseModel finalizar(Long id) {
+    public RetornoBaseModel finalizar() {
         try {
-            Lote lote = loteService.find(id);
+            Lote lote = loteService.getLoteAtivo();
             validateFinalizacaoLote(lote);
             return new RetornoBaseModel(true, "Lote finalizado com sucesso", loteService.finalizar(lote));
         } catch(Exception ex) {
