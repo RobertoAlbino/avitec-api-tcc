@@ -22,9 +22,14 @@ public class IndicadorResource {
         return indicadorBusiness.findAll();
     }
 
-    @GetMapping(value = "ultimos", produces="application/json")
+    @GetMapping(value = "/ultimos", produces="application/json")
     public RetornoBaseModel getUltimos() {
         return indicadorBusiness.getUltimos();
+    }
+
+    @GetMapping(value = "/zona/{zona}", produces="application/json")
+    public RetornoBaseModel getByZona(@PathVariable Integer zona) {
+        return indicadorBusiness.getByZona(zona);
     }
 
     @PostMapping(consumes = "application/json", produces="application/json")

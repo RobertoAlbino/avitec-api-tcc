@@ -82,4 +82,12 @@ public class LoteBusiness {
             return new RetornoBaseModel(false, ex.getMessage(), null);
         }
     }
+
+    public Lote getLoteAtivo() {
+        Boolean hasLoteAtivo = loteService.hasLoteAtivo();
+        if (!hasLoteAtivo) {
+            throw new RuntimeException("Pelo menos um lote precisa ser ativado");
+        }
+        return loteService.getLoteAtivo();
+    }
 }

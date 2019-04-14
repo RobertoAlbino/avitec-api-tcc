@@ -14,4 +14,5 @@ public interface IndicadorRepository extends JpaRepository<Indicador, Long> {
                    "FROM INDICADOR GROUP BY ZONA ORDER BY DATA ASC) " +
                    "GROUP BY ZONA ORDER BY DATA ASC", nativeQuery = true)
     List<Indicador> getUltimosIndicadoresPorZona();
+    List<Indicador> findByZona(Integer zona);
 }

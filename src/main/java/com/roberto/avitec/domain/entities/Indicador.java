@@ -27,6 +27,11 @@ public class Indicador {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt-BR", timezone = "Brazil/East")
     private Date data;
 
+    @NotNull
+    @OneToOne
+    @JoinColumn(name = "id_lote")
+    private Lote lote;
+
     public Long getId() {
         return id;
     }
@@ -65,5 +70,13 @@ public class Indicador {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Lote getLote() {
+        return lote;
+    }
+
+    public void setLote(Lote lote) {
+        this.lote = lote;
     }
 }

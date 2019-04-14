@@ -1,5 +1,6 @@
 package com.roberto.avitec.service;
 
+import com.roberto.avitec.business.LoteBusiness;
 import com.roberto.avitec.domain.entities.Indicador;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import com.roberto.avitec.repository.IndicadorRepository;
@@ -13,11 +14,14 @@ import java.util.List;
 @Transactional
 public class IndicadorService {
 
+    private LoteBusiness loteBusiness;
     private IndicadorRepository indicadorRepository;
 
     @Autowired
-    public IndicadorService(IndicadorRepository indicadorRepository) {
+    public IndicadorService(IndicadorRepository indicadorRepository,
+                            LoteBusiness loteBusiness) {
         this.indicadorRepository = indicadorRepository;
+        this.loteBusiness = loteBusiness;
     }
 
     private Indicador toEntity(IndicadorModel model)  {
@@ -26,6 +30,7 @@ public class IndicadorService {
         indicador.setTemperatura(model.getTemperatura());
         indicador.setUmidade(model.getUmidade());
         indicador.setData(DateUtils.now());
+        indicador.setLote(loteBusiness.getLoteAtivo());
         return indicador;
     }
 
@@ -35,6 +40,10 @@ public class IndicadorService {
 
     public List<Indicador> getUltimos()  {
         return indicadorRepository.getUltimosIndicadoresPorZona();
+    }
+
+    public List<Indicador> getByZona(Integer zona)  {
+        return indicadorRepository.findByZona(zona);
     }
 
     public Indicador create(IndicadorModel model) {

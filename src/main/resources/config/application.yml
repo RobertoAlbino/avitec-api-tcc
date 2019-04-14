@@ -52,15 +52,14 @@ jhipster:
         from: AviTec@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: AviTec API
-        description: AviTec API documentation
-        version: 0.0.1
+        title: avitec-api
+        description: avitec-api-documentation
+        version: 1.0.0
         terms-of-service-url:
         contact-name:
         contact-url:
         contact-email:
-        license:
-        license-url:
+        license: MIT
     ribbon:
         display-on-active-profiles: dev
 application:
