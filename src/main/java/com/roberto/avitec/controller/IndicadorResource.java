@@ -22,8 +22,23 @@ public class IndicadorResource {
         return indicadorBusiness.findAll();
     }
 
+    @GetMapping(value = "ultimos", produces="application/json")
+    public RetornoBaseModel getUltimos() {
+        return indicadorBusiness.getUltimos();
+    }
+
     @PostMapping(consumes = "application/json", produces="application/json")
     public RetornoBaseModel create(@RequestBody IndicadorModel indicador) {
         return indicadorBusiness.create(indicador);
+    }
+
+    @DeleteMapping(value="/{id}", produces="application/json")
+    public RetornoBaseModel delete(@PathVariable Long id) {
+        return indicadorBusiness.delete(id);
+    }
+
+    @DeleteMapping(value= "/all", produces="application/json")
+    public RetornoBaseModel deleteAll() {
+        return indicadorBusiness.deleteAll();
     }
 }

@@ -5,6 +5,8 @@ import com.roberto.avitec.domain.base.RetornoBaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/api/lotes")
 public class LoteResource {
@@ -30,4 +32,15 @@ public class LoteResource {
     public RetornoBaseModel finalizar() {
         return loteBusiness.finalizar();
     }
+
+    @DeleteMapping(value="/{id}", produces="application/json")
+    public RetornoBaseModel delete(@PathVariable Long id) {
+        return loteBusiness.delete(id);
+    }
+
+    @DeleteMapping(value= "/all", produces="application/json")
+    public RetornoBaseModel deleteAll() {
+        return loteBusiness.deleteAll();
+    }
+
 }

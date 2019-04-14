@@ -1,5 +1,7 @@
 package com.roberto.avitec.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -22,6 +24,7 @@ public class Indicador {
     private BigDecimal umidade;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt-BR", timezone = "Brazil/East")
     private Date data;
 
     public Long getId() {

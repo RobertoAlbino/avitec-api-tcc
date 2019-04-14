@@ -48,4 +48,8 @@ public class LoteService {
     public boolean hasLoteAtivo() {
         return loteRepository.existsLoteByAtivoTrue();
     }
+
+    public void delete(Long id) {
+        loteRepository.delete(id);
+    }
 }

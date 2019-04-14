@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class LoteBusiness {
@@ -55,6 +57,27 @@ public class LoteBusiness {
             Lote lote = loteService.getLoteAtivo();
             validateFinalizacaoLote(lote);
             return new RetornoBaseModel(true, "Lote finalizado com sucesso", loteService.finalizar(lote));
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
+
+    public RetornoBaseModel delete(Long id) {
+        try {
+            loteService.delete(id);
+            return new RetornoBaseModel(true, "Lote excluído com sucesso", null);
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
+
+    public RetornoBaseModel deleteAll() {
+        try {
+            List<Lote> lotes = loteService.findAll();
+            for (Lote lote: lotes) {
+                delete(lote.getId());
+            }
+            return new RetornoBaseModel(true, "Todos os lotes foram excluídos com sucesso", null);
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);
         }

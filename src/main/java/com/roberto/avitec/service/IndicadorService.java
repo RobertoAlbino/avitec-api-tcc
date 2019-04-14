@@ -33,8 +33,16 @@ public class IndicadorService {
         return indicadorRepository.findAll();
     }
 
+    public List<Indicador> getUltimos()  {
+        return indicadorRepository.getUltimosIndicadoresPorZona();
+    }
+
     public Indicador create(IndicadorModel model) {
         Indicador indicador = toEntity(model);
         return indicadorRepository.save(indicador);
+    }
+
+    public void delete(Long id) {
+        indicadorRepository.delete(id);
     }
 }
