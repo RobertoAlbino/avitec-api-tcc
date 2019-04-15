@@ -23,21 +23,15 @@ public class AviTecApp {
 
     private static final Logger log = LoggerFactory.getLogger(com.roberto.avitec.AviTecApp.class);
     private final Environment env;
-    private static Integer port = null;
 
     public AviTecApp(Environment env) {
         this.env = env;
-    }
-
-    public static Integer getPort() {
-        return port;
     }
 
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(com.roberto.avitec.AviTecApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
-        port = Integer.parseInt(env.getProperty("server.port"));
         log.info("\n----------------------------------------------------------\n\t" +
                 "Aplicacao '{}' esta rodando! Acesso:\n\t" +
                 "Local: \t\t{}://localhost:{}\n\t" +

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,6 +49,18 @@ public class IndicadorBusiness {
     public RetornoBaseModel create(IndicadorModel model) {
         try {
             return new RetornoBaseModel(true, "Indicador criado com sucesso", indicadorService.create(model));
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
+
+    public RetornoBaseModel createList(List<IndicadorModel> models) {
+        try {
+            List<Indicador> indicadoresCriados = new ArrayList<>();
+            for (IndicadorModel model: models) {
+                indicadoresCriados.add(indicadorService.create(model));
+            }
+            return new RetornoBaseModel(true, "Indicadores criados com sucesso", indicadoresCriados);
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);
         }

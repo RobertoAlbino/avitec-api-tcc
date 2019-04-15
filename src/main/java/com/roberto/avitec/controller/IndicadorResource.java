@@ -6,6 +6,8 @@ import com.roberto.avitec.domain.models.IndicadorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/indicadores")
 public class IndicadorResource {
@@ -35,6 +37,11 @@ public class IndicadorResource {
     @PostMapping(consumes = "application/json", produces="application/json")
     public RetornoBaseModel create(@RequestBody IndicadorModel indicador) {
         return indicadorBusiness.create(indicador);
+    }
+
+    @PostMapping(value = "/list", consumes = "application/json", produces="application/json")
+    public RetornoBaseModel createList(@RequestBody List<IndicadorModel> indicadores) {
+        return indicadorBusiness.createList(indicadores);
     }
 
     @DeleteMapping(value="/{id}", produces="application/json")
