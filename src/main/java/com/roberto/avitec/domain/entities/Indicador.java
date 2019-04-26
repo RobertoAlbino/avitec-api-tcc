@@ -32,6 +32,12 @@ public class Indicador {
     @JoinColumn(name = "id_lote")
     private Lote lote;
 
+    @NotNull
+    private Boolean isTemperaturaIdeal;
+
+    @NotNull
+    private Boolean isUmidadeIdeal;
+
     public Long getId() {
         return id;
     }
@@ -78,5 +84,21 @@ public class Indicador {
 
     public void setLote(Lote lote) {
         this.lote = lote;
+    }
+
+    public Boolean isTemperaturaIdeal() {
+        return isTemperaturaIdeal;
+    }
+
+    public void setTemperaturaIdeal(Boolean temperaturaIdeal) {
+        this.isTemperaturaIdeal = temperaturaIdeal;
+    }
+
+    public Boolean isUmidadeIdeal() {
+        return isUmidadeIdeal;
+    }
+
+    public void setUmidadeIdeal(Boolean umidadeIdeal) {
+        this.isUmidadeIdeal = umidadeIdeal;
     }
 }

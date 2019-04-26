@@ -2,8 +2,10 @@ package com.roberto.avitec.business;
 
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Indicador;
+import com.roberto.avitec.domain.entities.TabelaPadrao;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import com.roberto.avitec.service.IndicadorService;
+import com.roberto.avitec.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,77 @@ import java.util.List;
 @Transactional
 public class IndicadorBusiness {
 
+    private LoteBusiness loteBusiness;
+    private TabelaPadraoBusiness tabelaPadraoBusiness;
     private IndicadorService indicadorService;
 
     @Autowired
-    public IndicadorBusiness(IndicadorService indicadorService) {
+    public IndicadorBusiness(IndicadorService indicadorService,
+                             LoteBusiness loteBusiness,
+                             TabelaPadraoBusiness tabelaPadraoBusiness) {
         this.indicadorService = indicadorService;
+        this.loteBusiness = loteBusiness;
+        this.tabelaPadraoBusiness = tabelaPadraoBusiness;
+    }
+
+    private Indicador toEntity(IndicadorModel model)  {
+        Indicador indicador = new Indicador();
+        indicador.setZona(model.getZona());
+        indicador.setTemperatura(model.getTemperatura());
+        indicador.setUmidade(model.getUmidade());
+        indicador.setData(DateUtils.now());
+        indicador.setLote(loteBusiness.getLoteAtivo());
+        return indicador;
+    }
+
+    private boolean compareTemperaturaValue(TabelaPadrao tabelaPadrao, Indicador indicador) {
+        return  indicador.getTemperatura().compareTo(tabelaPadrao.getTemperaturaMinima()) == -1 ||
+                indicador.getTemperatura().compareTo(tabelaPadrao.getTemperaturaMaxima()) == 1;
+    }
+
+    private boolean compareUmidadadeValue(TabelaPadrao tabelaPadrao, Indicador indicador) {
+        return  indicador.getUmidade().compareTo(tabelaPadrao.getUmidadeMinima()) == -1 ||
+                indicador.getUmidade().compareTo(tabelaPadrao.getUmidadeMaxima()) == 1;
+    }
+
+    private Indicador setIndicadorHealth(Indicador indicador, Integer semana) {
+        List<TabelaPadrao> listaTabelaPadrao = (List<TabelaPadrao>) tabelaPadraoBusiness.findAll().getObjeto();
+        TabelaPadrao tabelaPadraoSetimoDias = listaTabelaPadrao.get(semana);
+        if (listaTabelaPadrao == null) {
+            throw new RuntimeException("A tabela padrão precisa ser configurada");
+        }
+        if (compareTemperaturaValue(tabelaPadraoSetimoDias, indicador)) {
+            indicador.setTemperaturaIdeal(false);
+        } else {
+            indicador.setTemperaturaIdeal(true);
+        }
+        if (compareUmidadadeValue(tabelaPadraoSetimoDias, indicador)) {
+            indicador.setUmidadeIdeal(false);
+        } else {
+            indicador.setUmidadeIdeal(true);
+        }
+        return indicador;
+    }
+
+    private Indicador analyzeIndicador(Indicador indicador) {
+        Integer quantidadeDiasLote = loteBusiness.getIdadeLoteDias();
+        if (quantidadeDiasLote <= 7) {
+            return setIndicadorHealth(indicador, 0);
+        } else if (quantidadeDiasLote <= 14) {
+            return setIndicadorHealth(indicador, 1);
+        } else if (quantidadeDiasLote <= 21) {
+            return setIndicadorHealth(indicador, 2);
+        } else if (quantidadeDiasLote <= 28) {
+            return setIndicadorHealth(indicador, 3);
+        } else if (quantidadeDiasLote <= 35) {
+            return setIndicadorHealth(indicador, 4);
+        } else if (quantidadeDiasLote <= 42) {
+            return setIndicadorHealth(indicador, 5);
+        } else if (quantidadeDiasLote <= 49) {
+            return setIndicadorHealth(indicador, 6);
+        } else {
+            throw new RuntimeException("A quantidade de dias do lote está fora do padrão configurado");
+        }
     }
 
     public RetornoBaseModel findAll() {
@@ -48,7 +116,8 @@ public class IndicadorBusiness {
 
     public RetornoBaseModel create(IndicadorModel model) {
         try {
-            return new RetornoBaseModel(true, "Indicador criado com sucesso", indicadorService.create(model));
+            Indicador indicador = analyzeIndicador(toEntity(model));
+            return new RetornoBaseModel(true, "Indicador criado com sucesso", indicadorService.create(indicador));
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);
         }
@@ -58,7 +127,8 @@ public class IndicadorBusiness {
         try {
             List<Indicador> indicadoresCriados = new ArrayList<>();
             for (IndicadorModel model: models) {
-                indicadoresCriados.add(indicadorService.create(model));
+                Indicador indicador = analyzeIndicador(toEntity(model));
+                indicadoresCriados.add(indicadorService.create(indicador));
             }
             return new RetornoBaseModel(true, "Indicadores criados com sucesso", indicadoresCriados);
         } catch(Exception ex) {

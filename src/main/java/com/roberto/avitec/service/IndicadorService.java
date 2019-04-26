@@ -24,15 +24,6 @@ public class IndicadorService {
         this.loteBusiness = loteBusiness;
     }
 
-    private Indicador toEntity(IndicadorModel model)  {
-        Indicador indicador = new Indicador();
-        indicador.setZona(model.getZona());
-        indicador.setTemperatura(model.getTemperatura());
-        indicador.setUmidade(model.getUmidade());
-        indicador.setData(DateUtils.now());
-        indicador.setLote(loteBusiness.getLoteAtivo());
-        return indicador;
-    }
 
     public List<Indicador> findAll()  {
         return indicadorRepository.findAll();
@@ -46,8 +37,7 @@ public class IndicadorService {
         return indicadorRepository.findByZona(zona);
     }
 
-    public Indicador create(IndicadorModel model) {
-        Indicador indicador = toEntity(model);
+    public Indicador create(Indicador indicador) {
         return indicadorRepository.save(indicador);
     }
 

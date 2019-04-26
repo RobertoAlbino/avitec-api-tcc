@@ -3,6 +3,8 @@ package com.roberto.avitec.business;
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Lote;
 import com.roberto.avitec.service.LoteService;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,5 +91,10 @@ public class LoteBusiness {
             throw new RuntimeException("Pelo menos um lote precisa ser ativado");
         }
         return loteService.getLoteAtivo();
+    }
+
+    public Integer getIdadeLoteDias() {
+        Lote loteAtivo = getLoteAtivo();
+        return Days.daysBetween(new DateTime(loteAtivo.getDataInicio()), DateTime.now()).getDays();
     }
 }
