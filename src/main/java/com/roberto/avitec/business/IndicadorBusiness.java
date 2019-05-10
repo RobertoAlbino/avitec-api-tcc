@@ -4,14 +4,18 @@ import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Indicador;
 import com.roberto.avitec.domain.entities.TabelaPadrao;
 import com.roberto.avitec.domain.models.IndicadorModel;
+import com.roberto.avitec.service.FirebaseService;
 import com.roberto.avitec.service.IndicadorService;
 import com.roberto.avitec.utils.DateUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Transactional
@@ -20,14 +24,17 @@ public class IndicadorBusiness {
     private LoteBusiness loteBusiness;
     private TabelaPadraoBusiness tabelaPadraoBusiness;
     private IndicadorService indicadorService;
+    private FirebaseService firebaseService;
 
     @Autowired
     public IndicadorBusiness(IndicadorService indicadorService,
                              LoteBusiness loteBusiness,
-                             TabelaPadraoBusiness tabelaPadraoBusiness) {
+                             TabelaPadraoBusiness tabelaPadraoBusiness,
+                             FirebaseService firebaseService) {
         this.indicadorService = indicadorService;
         this.loteBusiness = loteBusiness;
         this.tabelaPadraoBusiness = tabelaPadraoBusiness;
+        this.firebaseService = firebaseService;
     }
 
     private Indicador toEntity(IndicadorModel model)  {
@@ -92,6 +99,27 @@ public class IndicadorBusiness {
 
     public RetornoBaseModel findAll() {
         try {
+            JSONObject body = new JSONObject();
+            body.put("to", firebaseService.getToken());
+            body.put("priority", "high");
+
+            JSONObject notification = new JSONObject();
+            notification.put("title", "JSA Notification");
+            notification.put("body", "Happy Message!");
+
+            JSONObject data = new JSONObject();
+            data.put("Key-1", "JSA Data 1");
+            data.put("Key-2", "JSA Data 2");
+
+            body.put("notification", notification);
+            body.put("data", data);
+
+
+            HttpEntity<String> request = new HttpEntity<>(body.toString());
+
+            CompletableFuture<String> pushNotification = firebaseService.send(request);
+            CompletableFuture.allOf(pushNotification).join();
+            String firebaseResponse = pushNotification.get();
             return new RetornoBaseModel(true, "Lista de indicadores", indicadorService.findAll());
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);

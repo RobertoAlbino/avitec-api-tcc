@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "avitec-app",
+  "private_key_id": "5a8cde18b5da38e855a08203a979f75f00a3ce93",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWMH4/+ZHtAnSc\n+aNpO6qhA2K/hMdSms0en8LoEe//9VV79NksEADterkGcpXa41J5A3vmsjZqv7yR\nWEDKfQhCgDhtFgyMI61rxT5p8pH1BnPsk8dggCiQnbrTdSGIk5H28MncfKFmJacp\nbYZ0hEZ50o6/18G0rtCsGRnaRePOb5PSjd4cGYKaxHJuFFm5xT7sMdrfB+8ZB4SF\nlJuniwybNHdxPjQDevrNF0ZcBR+ZXh2o6njMReWIFlGkimAXEkP7UOLpGEElEtQO\n3lhs+U59KFNJX/PavYeulMVMV6xTe8L2YIi5T3D3x8KFt/X6Nu2kRxrYFmt/QqZO\nk2TgD7+lAgMBAAECggEAFndnk1NWcGFTJ14ygx3hTteuUF7g4Cr27xNP+R4hzCSb\nZoEAcZZtRRj8D4pZf1ZM8nxCbwaOnFZVM1rDymZ8s1Hx3uOS+e2mVf458WhPTBts\ngOG0S+uv5b4qgdI+M2t7xLhNQfXEwP517H0NRWW6EyQbpXf1an1SCsRweRXGV41f\nmnTi6XMvPav3VEuuP2TVLkvDQSJVXoehgHGMBVwkRzvRvxjd2Q8wE2w6eq+OA7yG\n1pQqkDjubN6nzSrQh7SHrZANIknr3dYzHXkHPER+DkhO8nvAzyl6qfQBCaQ931tQ\n5sBkamOwHk4Dd84Pn7hdSm7igxLFyUkszLDHxgwucQKBgQDKZ9S/vxDjmVPaIk5C\nCL7GT9L7OpCwQDEolik4AZof9ZLXfhOmDC0oj/IoKOskySsrufXgyTDfcOS4yfGF\nSRFDlhLwE4WJMHPhJI7yxHlIb+BXxH7USZYcl/G1iBEJUuX3ieakKKS27/Qz2GGn\nTQ8FABymcPGozhzTPzsDraA1GQKBgQC99Sl/9ynzFKCn9P/n5w0dbvly7FOqkTWD\nt3UyFoKygmb2Ujpkwu7lgefspvbq6nRlSQ8EPaQUp2NnRQtRAVc66Z3RWS6LabKF\nnUJ3Nihn2fWaR3txuJp211JBOJ2bKnCGQujRJ9vzIIn9UrlN1Vt7XPa9NRciFOn4\nj9iH4ALEbQKBgQCzBe9owahAhudhsqIhSfbjFMt5pi0/lydjzJ0cil42ElEVBNCA\nN5jhnaAD4V1KJhxnCo3tikYN+55xyzwyNZRtgRmy+rFLzG1SH7HIC/tyFHILbyL2\nxTdehw4lD/pxkr8QmQpE/CXkIIyQJr0I6uFz/Mtac99q/RMFzZF3CWUAUQKBgAC4\nBMgvL0F0OodoLe+6uBn8aYU9z7M9iW5OK2tdGnGCfNFBzmbDNhQ4QaBroVOSP46C\nkEP717scRwwE/t33m1TlvWslYz+zzrEivzWkRtLdyEglLRppEGyStAT7Kd2Ec5iO\neEMSW4q3/M2wmnLo88erumNM6CGA4sHGCZO6DUihAoGAPcFXq6xV+bxTtkyfHTO1\nzUECkR8nebmYFe8IU7eMVOjg30s7/G0cEOQjB/12vETAFvcNWyOs0S4ZT6G98Ya5\nhvic9jpb4CndoJraXDW1D1mrHK4emV7N+HCPwot5yBI1xUuHqmf11ZuAU9rFfcFN\n+3EwOgUaqMk762kkuiX7y/Q=\n-----END PRIVATE KEY-----\n",
+  "client_email": "avitec@avitec-app.iam.gserviceaccount.com",
+  "client_id": "101589704657410421991",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/avitec%40avitec-app.iam.gserviceaccount.com"
+}
