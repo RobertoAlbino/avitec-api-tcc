@@ -4,7 +4,6 @@ import com.roberto.avitec.config.ApplicationProperties;
 import com.roberto.avitec.config.DefaultProfileUtil;
 
 import com.roberto.avitec.service.FirebaseService;
-import com.roberto.avitec.service.PushService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

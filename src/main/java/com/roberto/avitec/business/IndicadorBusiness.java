@@ -3,19 +3,18 @@ package com.roberto.avitec.business;
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Indicador;
 import com.roberto.avitec.domain.entities.TabelaPadrao;
+import com.roberto.avitec.domain.enums.TipoEnvioPush;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import com.roberto.avitec.service.FirebaseService;
 import com.roberto.avitec.service.IndicadorService;
 import com.roberto.avitec.utils.DateUtils;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Transactional
@@ -57,6 +56,24 @@ public class IndicadorBusiness {
                 indicador.getUmidade().compareTo(tabelaPadrao.getUmidadeMaxima()) == 1;
     }
 
+    private void validateNecessarioNotificarUsuarioTemperatura(TabelaPadrao tabelaPadrao, Indicador indicador) {
+        if (indicador.getTemperatura().min(tabelaPadrao.getTemperaturaMaxima()).compareTo(new BigDecimal(0)) == 1) {
+            firebaseService.validateEnvioPermitidoAndSendPush("Anomalia na temperatura", "Temperatura atual: " + indicador.getTemperatura(), TipoEnvioPush.TEMPERATURA);
+        }
+        if (indicador.getTemperatura().min(tabelaPadrao.getTemperaturaMinima()).compareTo(new BigDecimal(0)) == -1) {
+            firebaseService.validateEnvioPermitidoAndSendPush("Anomalia na temperatura", "Temperatura atual: " + indicador.getTemperatura(), TipoEnvioPush.TEMPERATURA);
+        }
+    }
+
+    private void validateNecessarioNotificarUsuarioUmidade(TabelaPadrao tabelaPadrao, Indicador indicador) {
+        if (indicador.getUmidade().min(tabelaPadrao.getUmidadeMaxima()).compareTo(new BigDecimal(0)) == 1) {
+            firebaseService.validateEnvioPermitidoAndSendPush("Anomalia na umidade", "Umidade atual: " + indicador.getUmidade(), TipoEnvioPush.UMIDADE);
+        }
+        if (indicador.getUmidade().min(tabelaPadrao.getUmidadeMinima()).compareTo(new BigDecimal(0)) == -1) {
+            firebaseService.validateEnvioPermitidoAndSendPush("Anomalia na umidade", "Umidade atual: " + indicador.getUmidade(), TipoEnvioPush.UMIDADE);
+        }
+    }
+
     private Indicador setIndicadorHealth(Indicador indicador, Integer semana) {
         List<TabelaPadrao> listaTabelaPadrao = (List<TabelaPadrao>) tabelaPadraoBusiness.findAll().getObjeto();
         TabelaPadrao tabelaPadraoSetimoDias = listaTabelaPadrao.get(semana);
@@ -65,11 +82,13 @@ public class IndicadorBusiness {
         }
         if (compareTemperaturaValue(tabelaPadraoSetimoDias, indicador)) {
             indicador.setTemperaturaIdeal(false);
+            validateNecessarioNotificarUsuarioTemperatura(tabelaPadraoSetimoDias, indicador);
         } else {
             indicador.setTemperaturaIdeal(true);
         }
         if (compareUmidadadeValue(tabelaPadraoSetimoDias, indicador)) {
             indicador.setUmidadeIdeal(false);
+            validateNecessarioNotificarUsuarioUmidade(tabelaPadraoSetimoDias, indicador);
         } else {
             indicador.setUmidadeIdeal(true);
         }
@@ -99,27 +118,6 @@ public class IndicadorBusiness {
 
     public RetornoBaseModel findAll() {
         try {
-            JSONObject body = new JSONObject();
-            body.put("to", firebaseService.getToken());
-            body.put("priority", "high");
-
-            JSONObject notification = new JSONObject();
-            notification.put("title", "JSA Notification");
-            notification.put("body", "Happy Message!");
-
-            JSONObject data = new JSONObject();
-            data.put("Key-1", "JSA Data 1");
-            data.put("Key-2", "JSA Data 2");
-
-            body.put("notification", notification);
-            body.put("data", data);
-
-
-            HttpEntity<String> request = new HttpEntity<>(body.toString());
-
-            CompletableFuture<String> pushNotification = firebaseService.send(request);
-            CompletableFuture.allOf(pushNotification).join();
-            String firebaseResponse = pushNotification.get();
             return new RetornoBaseModel(true, "Lista de indicadores", indicadorService.findAll());
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);
