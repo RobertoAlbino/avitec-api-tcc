@@ -4,7 +4,9 @@ import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.entities.Indicador;
 import com.roberto.avitec.domain.entities.TabelaPadrao;
 import com.roberto.avitec.domain.enums.TipoEnvioPush;
+import com.roberto.avitec.domain.models.ExtremosIndicadoresPorDiaModel;
 import com.roberto.avitec.domain.models.IndicadorModel;
+import com.roberto.avitec.domain.models.MediaUltimosIndicadoresModel;
 import com.roberto.avitec.service.FirebaseService;
 import com.roberto.avitec.service.IndicadorService;
 import com.roberto.avitec.utils.DateUtils;
@@ -12,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -135,6 +141,39 @@ public class IndicadorBusiness {
     public RetornoBaseModel getByZona(Integer zona) {
         try {
             return new RetornoBaseModel(true, "Lista de indicadores por zona", indicadorService.getByZona(zona));
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
+
+    public RetornoBaseModel mediaUltimosIndicadores() {
+        try {
+            MediaUltimosIndicadoresModel model = new MediaUltimosIndicadoresModel();
+            List<Indicador> indicadores = indicadorService.getUltimos();
+            BigDecimal mediaTemperatura = indicadores.stream().map(Indicador::getTemperatura).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()));
+            BigDecimal mediaUmidade = indicadores.stream().map(Indicador::getUmidade).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()));
+            model.setMediaTemperatura(mediaTemperatura);
+            model.setMediaUmidade(mediaUmidade);
+            return new RetornoBaseModel(true, "Média últimos indicadores", model);
+        } catch(Exception ex) {
+            return new RetornoBaseModel(false, ex.getMessage(), null);
+        }
+    }
+
+    public RetornoBaseModel informacoesFechamentoLote(Long idLote) {
+        try {
+            List<ExtremosIndicadoresPorDiaModel> extremosIndicadoresPorDia = new LinkedList<>();
+            Object[] indicadores = indicadorService.informacoesFechamentoLote(idLote);
+            for (Object indicador : indicadores) {
+                ExtremosIndicadoresPorDiaModel model = new ExtremosIndicadoresPorDiaModel();
+                model.setData((Date) ((Object[]) indicador)[0]);
+                model.setTemperaturaMaxima((BigDecimal) ((Object[]) indicador)[1]);
+                model.setUmidadeMaxima((BigDecimal) ((Object[]) indicador)[2]);
+                model.setTemperaturaMinima((BigDecimal) ((Object[]) indicador)[3]);
+                model.setUmidadeMinima((BigDecimal) ((Object[]) indicador)[4]);
+                extremosIndicadoresPorDia.add(model);
+            }
+            return new RetornoBaseModel(true, "Informações de fechamento do lote", extremosIndicadoresPorDia);
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);
         }

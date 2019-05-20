@@ -79,19 +79,20 @@ public class FirebaseService {
         return null;
     }
 
-    public Firebase setToken(TokenModel model) {
+    public List<Firebase> setToken(TokenModel model) {
         List<Firebase> tokens = findAll();
         if (tokens.size() == 0) {
             Firebase firebase = new Firebase();
             firebase.setToken(model.getToken());
-            return firebaseRepository.save(firebase);
+            firebaseRepository.save(firebase);
+            return tokens;
         } else {
             for (Firebase token: tokens) {
                 token.setToken(model.getToken());
-                return firebaseRepository.save(token);
+                firebaseRepository.save(token);
             }
+            return tokens;
         }
-        return tokens.get(0);
     }
 
     public void saveDateEnvioPush(TipoEnvioPush tipoEnvio) {
@@ -104,7 +105,6 @@ public class FirebaseService {
             firebaseRepository.save(firebase);
         } else {
             firebase.setUltimoEnvioPush(DateUtils.now());
-            firebase.setTipoEnvio(tipoEnvio);
             firebaseRepository.save(firebase);
         }
     }

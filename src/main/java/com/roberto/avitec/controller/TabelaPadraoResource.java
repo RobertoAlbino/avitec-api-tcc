@@ -32,6 +32,11 @@ public class TabelaPadraoResource {
         return tabelaPadraoBusiness.update(tabelaPadraoModel);
     }
 
+    @PutMapping(value= "/reset", consumes = "application/json", produces="application/json")
+    public RetornoBaseModel reset() {
+        return tabelaPadraoBusiness.reset();
+    }
+
     @DeleteMapping(value="/{id}", produces="application/json")
     public RetornoBaseModel delete(@PathVariable Long id) {
         return tabelaPadraoBusiness.delete(id);

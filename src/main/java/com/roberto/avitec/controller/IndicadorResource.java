@@ -34,6 +34,11 @@ public class IndicadorResource {
         return indicadorBusiness.getByZona(zona);
     }
 
+    @GetMapping(value = "/media", produces="application/json")
+    public RetornoBaseModel mediaUltimosIndicadores() {
+        return indicadorBusiness.mediaUltimosIndicadores();
+    }
+
     @PostMapping(consumes = "application/json", produces="application/json")
     public RetornoBaseModel create(@RequestBody IndicadorModel indicador) {
         return indicadorBusiness.create(indicador);

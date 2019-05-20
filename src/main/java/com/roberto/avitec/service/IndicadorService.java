@@ -2,9 +2,8 @@ package com.roberto.avitec.service;
 
 import com.roberto.avitec.business.LoteBusiness;
 import com.roberto.avitec.domain.entities.Indicador;
-import com.roberto.avitec.domain.models.IndicadorModel;
+import com.roberto.avitec.domain.models.ExtremosIndicadoresPorDiaModel;
 import com.roberto.avitec.repository.IndicadorRepository;
-import com.roberto.avitec.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +30,10 @@ public class IndicadorService {
 
     public List<Indicador> getUltimos()  {
         return indicadorRepository.getUltimosIndicadoresPorZona();
+    }
+
+    public Object[] informacoesFechamentoLote(Long idLote) {
+        return indicadorRepository.extremosIndicadoresPorDiaLote(idLote);
     }
 
     public List<Indicador> getByZona(Integer zona)  {

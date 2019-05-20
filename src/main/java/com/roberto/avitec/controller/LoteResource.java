@@ -1,5 +1,6 @@
 package com.roberto.avitec.controller;
 
+import com.roberto.avitec.business.IndicadorBusiness;
 import com.roberto.avitec.business.LoteBusiness;
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,22 @@ import org.springframework.web.bind.annotation.*;
 public class LoteResource {
 
     private LoteBusiness loteBusiness;
+    private IndicadorBusiness indicadorBusiness;
 
     @Autowired
-    public LoteResource(LoteBusiness loteBusiness) {
+    public LoteResource(LoteBusiness loteBusiness, IndicadorBusiness indicadorBusiness) {
         this.loteBusiness = loteBusiness;
+        this.indicadorBusiness = indicadorBusiness;
     }
 
     @GetMapping(produces="application/json")
     public RetornoBaseModel findAll() {
         return loteBusiness.findAll();
+    }
+
+    @GetMapping(value = "{id}/finalizar/info", produces="application/json")
+    public RetornoBaseModel infoFinalizacaoLote(@PathVariable Long id) {
+        return indicadorBusiness.informacoesFechamentoLote(id);
     }
 
     @PostMapping(value = "/iniciar", consumes = "application/json", produces="application/json")
@@ -40,5 +48,4 @@ public class LoteResource {
     public RetornoBaseModel deleteAll() {
         return loteBusiness.deleteAll();
     }
-
 }
