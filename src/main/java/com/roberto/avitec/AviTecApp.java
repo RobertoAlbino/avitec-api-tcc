@@ -36,8 +36,6 @@ public class AviTecApp {
         SpringApplication app = new SpringApplication(com.roberto.avitec.AviTecApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
-        firebaseService.init();
-        log.info("Firebase iniciado");
         log.info("\n----------------------------------------------------------\n\t" +
                 "Aplicacao '{}' esta rodando! Acesso:\n\t" +
                 "Local: \t\t{}://localhost:{}\n\t" +
