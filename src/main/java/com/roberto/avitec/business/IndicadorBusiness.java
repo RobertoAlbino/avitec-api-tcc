@@ -150,10 +150,16 @@ public class IndicadorBusiness {
         try {
             MediaUltimosIndicadoresModel model = new MediaUltimosIndicadoresModel();
             List<Indicador> indicadores = indicadorService.getUltimos();
-            BigDecimal mediaTemperatura = indicadores.stream().map(Indicador::getTemperatura).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()));
-            BigDecimal mediaUmidade = indicadores.stream().map(Indicador::getUmidade).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()));
+            BigDecimal mediaTemperatura = indicadores.stream().map(Indicador::getTemperatura).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()), BigDecimal.ROUND_UP);
+            BigDecimal mediaUmidade = indicadores.stream().map(Indicador::getUmidade).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(indicadores.size()), BigDecimal.ROUND_UP);
+            Indicador indicador = new Indicador();
+            indicador.setTemperatura(mediaTemperatura);
+            indicador.setUmidade(mediaUmidade);
+            indicador = analyzeIndicador(indicador);
             model.setMediaTemperatura(mediaTemperatura);
             model.setMediaUmidade(mediaUmidade);
+            model.setTemperaturaIdeal(indicador.isTemperaturaIdeal());
+            model.setUmidadeIdeal(indicador.isUmidadeIdeal());
             return new RetornoBaseModel(true, "Média últimos indicadores", model);
         } catch(Exception ex) {
             return new RetornoBaseModel(false, ex.getMessage(), null);

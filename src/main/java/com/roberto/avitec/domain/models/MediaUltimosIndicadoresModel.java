@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 public class MediaUltimosIndicadoresModel {
 
     private BigDecimal mediaTemperatura;
+    private Boolean isTemperaturaIdeal;
     private BigDecimal mediaUmidade;
+    private Boolean isUmidadeIdeal;
 
     public BigDecimal getMediaTemperatura() {
         return mediaTemperatura;
@@ -21,5 +23,21 @@ public class MediaUltimosIndicadoresModel {
 
     public void setMediaUmidade(BigDecimal mediaUmidade) {
         this.mediaUmidade = mediaUmidade;
+    }
+
+    public Boolean getTemperaturaIdeal() {
+        return isTemperaturaIdeal;
+    }
+
+    public void setTemperaturaIdeal(Boolean temperaturaIdeal) {
+        isTemperaturaIdeal = temperaturaIdeal;
+    }
+
+    public Boolean getUmidadeIdeal() {
+        return isUmidadeIdeal;
+    }
+
+    public void setUmidadeIdeal(Boolean umidadeIdeal) {
+        isUmidadeIdeal = umidadeIdeal;
     }
 }
