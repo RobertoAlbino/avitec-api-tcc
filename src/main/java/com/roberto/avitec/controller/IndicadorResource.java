@@ -4,8 +4,11 @@ import com.roberto.avitec.business.IndicadorBusiness;
 import com.roberto.avitec.domain.base.RetornoBaseModel;
 import com.roberto.avitec.domain.models.IndicadorModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -44,9 +47,26 @@ public class IndicadorResource {
         return indicadorBusiness.create(indicador);
     }
 
-    @PostMapping(value = "/list", consumes = "application/json", produces="application/json")
-    public RetornoBaseModel createList(@RequestBody List<IndicadorModel> indicadores) {
-        return indicadorBusiness.createList(indicadores);
+    @PostMapping(value = "/raw", consumes = MediaType.TEXT_PLAIN_VALUE, produces="application/json")
+    public List<RetornoBaseModel> createRaw(@RequestBody String raw) {
+        raw = raw.replace("\\","");
+        raw = raw.replace("/","");
+        raw = raw.replace("\"","");
+        List<RetornoBaseModel> retorno = new LinkedList<>();
+        String[] indicadores = raw.split(";");
+        if (indicadores == null) {
+            retorno.add(new RetornoBaseModel(false, "Nenhum indicador informado", null));
+            return retorno;
+        }
+        for (String indicadorArray : indicadores) {
+            String[] indicador = indicadorArray.split(",");
+            IndicadorModel model = new IndicadorModel();
+            model.setZona(new Integer(indicador[0]));
+            model.setTemperatura(new BigDecimal(indicador[1]));
+            model.setUmidade(new BigDecimal(indicador[2]));
+            retorno.add(indicadorBusiness.create(model));
+        }
+        return retorno;
     }
 
     @DeleteMapping(value="/{id}", produces="application/json")
