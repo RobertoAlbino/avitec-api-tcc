@@ -1,15 +1,11 @@
 package com.roberto.avitec.service;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.roberto.avitec.domain.entities.Firebase;
 import com.roberto.avitec.domain.enums.TipoEnvioPush;
 import com.roberto.avitec.domain.models.TokenModel;
 import com.roberto.avitec.repository.FirebaseRepository;
 import com.roberto.avitec.utils.DateUtils;
 import com.roberto.avitec.utils.HeaderRequestInterceptor;
-import org.joda.time.Minutes;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +14,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,22 +35,6 @@ public class FirebaseService {
     private static final String FIREBASE_SERVER_KEY = "AAAA8vG-Ss0:APA91bFDQ-q0mhf0XnW4chbP5k1ZahVevZ37X2dB_YwjhjRuTEtbkKbyrCoKg38exlb2SLP17UnBaDUkv_wuxyiERPCM0acar9u5G2Yktw6XbmV_xZFuwdB9oP0I2U18OGdyP5RvfP3r";
     private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 
-    public void init() {
-        try {
-            File json = ResourceUtils.getFile("classpath:avitec-app.json");
-            FileInputStream serviceAccount = new FileInputStream(json);
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://avitec-app.firebaseio.com")
-                    .build();
-            FirebaseApp.initializeApp(options);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
     public List<Firebase> findAll()  {
         return firebaseRepository.findAll();
     }
@@ -77,6 +53,19 @@ public class FirebaseService {
             return firebase.getUltimoEnvioPush();
         }
         return null;
+    }
+
+    public Integer getIntervaloEnvioPush() {
+        List<Firebase> firebase = findAll();
+        if (firebase.get(0).getIntervaloEnvio() != null) {
+            return firebase.get(0).getIntervaloEnvio();
+        } else {
+            for (Firebase firebaseRow : firebase) {
+                firebaseRow.setIntervaloEnvio(5);
+                firebaseRepository.save(firebase);
+            }
+            return firebase.get(0).getIntervaloEnvio();
+        }
     }
 
     public List<Firebase> setToken(TokenModel model) {
@@ -109,6 +98,15 @@ public class FirebaseService {
         }
     }
 
+    public List<Firebase> setIntervaloEnvio(Integer intervalo) {
+        List<Firebase> firebaseRows = findAll();
+        for (Firebase firebase : firebaseRows) {
+            firebase.setIntervaloEnvio(intervalo);
+            firebaseRepository.save(firebase);
+        }
+        return firebaseRows;
+    }
+
     public void validateEnvioPermitidoAndSendPush(String header, String message, TipoEnvioPush tipoEnvio) {
         Date ultimoEnvioPush = getUltimaDataEnvioPush(tipoEnvio);
         if (ultimoEnvioPush == null) {
@@ -117,7 +115,7 @@ public class FirebaseService {
         }
         Long diff = DateUtils.now().getTime() - ultimoEnvioPush.getTime();
         Integer diferencaMinutos = (int)(diff / (60 * 1000));
-        if (diferencaMinutos > 5) {
+        if (getIntervaloEnvioPush() == 0 || diferencaMinutos > getIntervaloEnvioPush()) {
             send(header, message, tipoEnvio);
         }
     }

@@ -20,6 +20,9 @@ public class Firebase {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt-BR", timezone = "Brazil/East")
     private Date ultimoEnvioPush;
 
+
+    private Integer intervaloEnvio;
+
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private TipoEnvioPush tipoEnvio;
@@ -46,6 +49,14 @@ public class Firebase {
 
     public void setUltimoEnvioPush(Date ultimoEnvioPush) {
         this.ultimoEnvioPush = ultimoEnvioPush;
+    }
+
+    public Integer getIntervaloEnvio() {
+        return intervaloEnvio;
+    }
+
+    public void setIntervaloEnvio(Integer intervaloEnvio) {
+        this.intervaloEnvio = intervaloEnvio;
     }
 
     public TipoEnvioPush getTipoEnvio() {

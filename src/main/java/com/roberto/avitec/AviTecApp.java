@@ -3,7 +3,6 @@ package com.roberto.avitec;
 import com.roberto.avitec.config.ApplicationProperties;
 import com.roberto.avitec.config.DefaultProfileUtil;
 
-import com.roberto.avitec.service.FirebaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -23,13 +22,10 @@ import java.net.UnknownHostException;
 public class AviTecApp {
 
     private static final Logger log = LoggerFactory.getLogger(com.roberto.avitec.AviTecApp.class);
-    private static FirebaseService firebaseService;
     private final Environment env;
 
-    public AviTecApp(Environment env,
-                     FirebaseService firebaseService) {
+    public AviTecApp(Environment env) {
         this.env = env;
-        this.firebaseService = firebaseService;
     }
 
     public static void main(String[] args) throws UnknownHostException {

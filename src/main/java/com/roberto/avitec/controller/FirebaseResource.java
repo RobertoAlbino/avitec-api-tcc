@@ -26,4 +26,9 @@ public class FirebaseResource {
     public RetornoBaseModel create(@RequestBody TokenModel token) {
         return new RetornoBaseModel(true, "Token atualizado com sucesso", firebaseService.setToken(token));
     }
+
+    @PutMapping(value= "/intervalo/{intervalo}", consumes = "application/json", produces="application/json")
+    public RetornoBaseModel setIntervaloEnvioPush(@PathVariable Integer intervalo) {
+        return new RetornoBaseModel(true, "Intervalo de envio atualizado com sucesso", firebaseService.setIntervaloEnvio(intervalo));
+    }
 }

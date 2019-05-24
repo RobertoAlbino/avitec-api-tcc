@@ -194,19 +194,6 @@ public class IndicadorBusiness {
         }
     }
 
-    public RetornoBaseModel createList(List<IndicadorModel> models) {
-        try {
-            List<Indicador> indicadoresCriados = new ArrayList<>();
-            for (IndicadorModel model: models) {
-                Indicador indicador = analyzeIndicador(toEntity(model));
-                indicadoresCriados.add(indicadorService.create(indicador));
-            }
-            return new RetornoBaseModel(true, "Indicadores criados com sucesso", indicadoresCriados);
-        } catch(Exception ex) {
-            return new RetornoBaseModel(false, ex.getMessage(), null);
-        }
-    }
-
     public RetornoBaseModel delete(Long id) {
         try {
             indicadorService.delete(id);
